@@ -8,8 +8,6 @@ export default function Frontpage() {
     const [isFiles, setIsFiles] = useState(false);
     const [myFile, setMyFile] = useState([]);
 
-    console.log("dwad")
-
     //*put file in a state so that we have access to remove it
     const onDrop = useCallback(
         (acceptedFiles) => {
