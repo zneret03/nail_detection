@@ -2,19 +2,27 @@ import { useState, useEffect, useCallback } from 'react';
 import { Modal } from '../'
 import { Icon } from '../icons'
 import { useDropzone } from "react-dropzone";
+import HttpRequest from '../../api'
+import axios from 'axios'
 import "./frontpage.scss";
 
 export default function Frontpage() {
     const [isFiles, setIsFiles] = useState(false);
     const [myFile, setMyFile] = useState([]);
 
-    //! tast : connecting python with reactJs + Electron
+    //** Test request to the backend */
+    const getRequest = () => {
+        HttpRequest.get("/members").then(response => console.log(response.data.members));
+    }
 
+    useEffect(getRequest, []);
+
+    //! tast : connecting python with reactJs + Electron
     //*put file in a state so that we have access to remove it
     const onDrop = useCallback(
         (acceptedFiles) => {
-            if (myFile.length > 0) {
-                console.log("invalid")
+            if (acceptedFiles.length > 1) {
+                console.log("Invalid attempt")
             } else {
                 setMyFile(
                     acceptedFiles.map(file => Object.assign(file, {
@@ -22,6 +30,7 @@ export default function Frontpage() {
                     }))
                 );
             }
+            console.log(acceptedFiles.length > 0)
         },
         [myFile]
     );
