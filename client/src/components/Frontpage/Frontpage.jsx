@@ -1,9 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Modal } from '../'
-import { Icon } from '../icons'
+import { useState, useEffect, useCallback } from "react";
+import { Modal } from "../";
+import { Icon } from "../icons";
 import { useDropzone } from "react-dropzone";
-import HttpRequest from '../../api'
-import axios from 'axios'
+//import HttpRequest from "../../api";
+import { AnimatePresence } from "framer-motion";
+//import axios from 'axios'
 import "./frontpage.scss";
 
 export default function Frontpage() {
@@ -11,49 +12,54 @@ export default function Frontpage() {
     const [myFile, setMyFile] = useState([]);
 
     //** Test request to the backend */
-    const getRequest = () => {
-        HttpRequest.get("/members").then(response => console.log(response.data.members));
-    }
+    // const getRequest = () => {
+    //     HttpRequest.get("/members").then((response) =>
+    //         console.log(response.data.members)
+    //     );
+    // };
 
-    useEffect(getRequest, []);
+    //useEffect(getRequest, []);
 
-    //! tast : connecting python with reactJs + Electron
     //*put file in a state so that we have access to remove it
     const onDrop = useCallback(
         (acceptedFiles) => {
             if (acceptedFiles.length > 1) {
-                console.log("Invalid attempt")
+                setMyFile([]);
             } else {
                 setMyFile(
-                    acceptedFiles.map(file => Object.assign(file, {
-                        preview: URL.createObjectURL(file)
-                    }))
+                    acceptedFiles.map((file) =>
+                        Object.assign(file, {
+                            preview: URL.createObjectURL(file),
+                        })
+                    )
                 );
             }
-            console.log(acceptedFiles.length > 0)
         },
-        [myFile]
+        []
     );
 
     const { getRootProps, getInputProps, open } = useDropzone({
         noClick: true,
         noKeyboard: true,
         accept: "image/jpeg, image/png",
-        onDrop
+        onDrop,
     });
 
     useEffect(() => {
         if (myFile.length > 0) {
             setIsFiles(true);
         } else {
-            setIsFiles(false)
+            setIsFiles(false);
         }
     }, [myFile])
 
-
     return (
         <>
-            {isFiles && <Modal setMyFile={setMyFile} files={myFile} />}
+            {isFiles && (
+                <AnimatePresence>
+                    <Modal setMyFile={setMyFile} files={myFile} />
+                </AnimatePresence>
+            )}
             <div className="wrapper">
                 <div className="left-content">
                     <header className="title-header">
@@ -83,10 +89,6 @@ export default function Frontpage() {
                                 Add Files
                             </button>
                         </div>
-                        {/* <aside>
-                        <h4>Files</h4>
-                        <ul>{files}</ul>
-                    </aside> */}
                     </div>
                 </div>
             </div>

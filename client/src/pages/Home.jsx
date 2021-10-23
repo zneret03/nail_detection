@@ -1,4 +1,4 @@
-import { Frontpage, Layout } from "../components/index";
+import { Frontpage, Layout } from "../components";
 
 export default function Home() {
     return (
