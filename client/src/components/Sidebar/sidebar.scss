@@ -1,0 +1,26 @@
+.sidebar-wrapper {
+  width: 220px;
+  height: 430px;
+  margin-right: 45px;
+
+  img {
+    width: 180px;
+    height: 55px;
+    margin: 8px 10px 5px;
+  }
+
+  .items {
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 15px;
+    margin: 15px 10px 0;
+    border-radius: 5px;
+
+    span {
+      color: #a6add1;
+    }
+  }
+}

@@ -1,0 +1,31 @@
+$color: #dbdde6;
+
+.analysis-wrapper {
+  padding: 20px 25px;
+  width: 100%;
+
+  span {
+    font-size: 24px;
+    color: var(--dark-navy);
+  }
+
+  .input-element {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+    border: 1px solid $color;
+    border-radius: 5px;
+    padding: 6px 10px;
+
+    input {
+      font-family: "Nunito Regular";
+      font-size: 15px;
+      margin: 0 10px;
+      border: none;
+
+      &::placeholder {
+        color: rgb(185, 154, 154);
+      }
+    }
+  }
+}

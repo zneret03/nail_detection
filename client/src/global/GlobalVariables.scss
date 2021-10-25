@@ -9,15 +9,27 @@
   --color: #000;
 
   //*window size
-  --width: 950px;
-  --height: 480px;
+  --width: 1000px;
+  --height: 530px;
 
   --super-white: #fff;
   --gray: #e9cbcf;
   --light-gray: #f7f8fc;
+  --slight-gray: #f3f5ff;
 
+  --font-nunito: "Nunito", sans-serif;
   --font-sans: "Calibre", "San Francisco", "SF Pro Text", -apple-system,
     system-ui, sans-serif;
 
   --border-radius: 5px;
+}
+
+@font-face {
+  font-family: "Nunito Semibold";
+  src: url(./font/Nunito-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: "Nunito Regular";
+  src: url(./font/Nunito-Regular.ttf);
 }

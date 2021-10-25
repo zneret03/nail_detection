@@ -20,7 +20,7 @@ function Modal({ setMyFile, files }) {
         setMyFile(specific_file)
     }
 
-    console.log(initialState)
+    //console.log(initialState)
 
     const onSubmit = () => {
         try {
@@ -46,7 +46,7 @@ function Modal({ setMyFile, files }) {
     return (
         <div className="modal-wrapper">
             <div className="modal-content">
-                <motion.div className="card" initial={{ opacity: 0, y: 0 }} animate={{ opacity: 1, y: 30 }} exit={{ opacity: 0, y: 0 }}>
+                <motion.div className="card" initial={{ opacity: 0, y: 0 }} animate={{ opacity: 1, y: 10 }} exit={{ opacity: 0, y: 0 }}>
                     <section>
                         <img src={initialState.preview} alt={initialState.name} />
                         <div className="button-wrapper">

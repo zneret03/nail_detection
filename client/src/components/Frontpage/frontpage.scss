@@ -1,3 +1,5 @@
+$padding-y: 50px;
+
 .wrapper {
   display: flex;
   position: relative;
@@ -6,7 +8,7 @@
   .left-content {
     position: relative;
     content: "";
-    height: 480px;
+    height: 530px;
     background: var(--dark-navy);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -36,7 +38,7 @@
   .right-content {
     width: 40%;
     max-width: 320px;
-    padding: 34px 15px;
+    padding: $padding-y 15px;
 
     .paragraph {
       margin: 15px 0;
@@ -99,7 +101,7 @@
   }
 
   .title-header {
-    padding: 35px 74px 0;
+    padding: $padding-y 74px 0;
 
     span {
       color: var(--light-slate);
