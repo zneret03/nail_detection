@@ -81,7 +81,7 @@ export default function Frontpage() {
                         <div {...getRootProps({ className: "dropzone" })}>
                             <input {...getInputProps()} />
                             <div>
-                                <p>Drag & Drop</p>
+                                <p>Drag and Drop</p>
                                 <span>or</span>
                             </div>
                             <button type="button" onClick={open}>

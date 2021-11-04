@@ -21,19 +21,19 @@ function Sidebar() {
         isClick({ status: true, currentIndex: index });
 
         if (ACTIONS[index] === ACTIONS[0]) {
-            return alert("image upload");
+            //return alert("image upload");
         }
 
         if (ACTIONS[index] === ACTIONS[1]) {
-            return alert("Segmentation");
+            //return alert("Segmentation");
         }
 
         if (ACTIONS[index] === ACTIONS[2]) {
-            return alert("Classification");
+            //return alert("Classification");
         }
 
         if (ACTIONS[index] === ACTIONS[3]) {
-            return alert("Reset");
+            //return alert("Reset");
         }
 
         if (ACTIONS[index] === ACTIONS[4]) {

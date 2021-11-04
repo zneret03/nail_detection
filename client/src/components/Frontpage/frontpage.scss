@@ -8,19 +8,29 @@ $padding-y: 50px;
   .left-content {
     position: relative;
     content: "";
-    height: 530px;
+    height: 650px;
     background: var(--dark-navy);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     width: 60%;
     clip-path: polygon(0 0, 100% 0%, calc(100% - 150px) 100%, 0% 100%);
 
+    .title-header {
+      span {
+        font-size: 35px;
+      }
+
+      p {
+        font-size: 15px;
+      }
+    }
+
     .circle {
       position: absolute;
       right: 60%;
       transform: translate(50%, 8%);
-      height: 280px;
-      width: 280px;
+      height: 350px;
+      width: 350px;
       background-color: var(--light-navy);
       border-radius: 50%;
       display: inline-block;
@@ -28,9 +38,9 @@ $padding-y: 50px;
       img {
         position: absolute;
         right: 0;
-        transform: translate(2%, 28%);
-        width: 300px;
-        height: 180px;
+        transform: translate(12%, 13%);
+        width: 440px;
+        height: 280px;
       }
     }
   }
@@ -47,7 +57,7 @@ $padding-y: 50px;
     }
 
     .title {
-      font-size: 35px;
+      font-size: 40px;
       font-weight: bold;
       color: var(--light-navy);
     }
@@ -60,8 +70,8 @@ $padding-y: 50px;
       background-color: var(--light-gray);
       border: 2px dashed var(--gray);
       margin: 50px 0 0;
-      width: 80%;
-      height: 250px;
+      width: 350px;
+      height: 350px;
       text-align: center;
       border-radius: var(--border-radius);
 
@@ -91,7 +101,7 @@ $padding-y: 50px;
         color: var(--white);
         background: var(--dark-navy);
         border-radius: var(--border-radius);
-        padding: 8px 15px;
+        padding: 8px 20px;
 
         &:hover {
           background: var(--light-navy);
