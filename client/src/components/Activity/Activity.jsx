@@ -8,7 +8,7 @@ export default function Activity() {
     const year = date.getFullYear();
     const dateToday = `${month} ${day}, ${year}`;
 
-    const imageSegmentation = ["sample1.jpeg", "sample2.jpg", "sample3.jpg", "sample4.jpg"]
+    const imageSegmentation = ["sample1.png", "sample2.png", "sample3.png", "sample4.png"]
 
     return (
         <div className="activity-wrapper">

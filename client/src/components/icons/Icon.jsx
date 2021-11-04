@@ -1,4 +1,5 @@
 import {
+    Notification,
     Bacteria,
     Add,
     Close,
@@ -27,6 +28,8 @@ export default function Icon({ name, width, height, fill }) {
             return <Exit width={width} height={height} fill={fill} />;
         case "Bacteria":
             return <Bacteria width={width} height={height} fill={fill} />;
+        case "Notification":
+            return <Notification width={width} height={height} fill={fill} />;
         default:
             return "Empty";
     }
