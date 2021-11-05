@@ -3,13 +3,24 @@
   position: absolute;
   right: 0;
 
-  .content {
+  .tooltip-card {
     border: 1px solid #f5eeee;
     border-radius: var(--border-radius);
     box-shadow: 5px 10px 30px #ece7e7;
     background-color: #fff;
-    padding: 40px;
+    padding: 20px 20px;
     width: 350px;
-    height: 300px;
+    height: 400px;
+
+    .content {
+      margin: 0 auto;
+      max-width: 320px;
+      text-align: center;
+
+      strong {
+        color: red;
+        text-decoration: underline;
+      }
+    }
   }
 }
