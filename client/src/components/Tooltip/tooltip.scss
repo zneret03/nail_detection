@@ -1,0 +1,15 @@
+.tooltip-wrapper {
+  z-index: 1;
+  position: absolute;
+  right: 0;
+
+  .content {
+    border: 1px solid #f5eeee;
+    border-radius: var(--border-radius);
+    box-shadow: 5px 10px 30px #ece7e7;
+    background-color: #fff;
+    padding: 40px;
+    width: 350px;
+    height: 300px;
+  }
+}

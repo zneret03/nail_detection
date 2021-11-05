@@ -1,14 +1,16 @@
-//import { useState } from 'react';
+import { useState } from 'react';
+import { Tooltip } from '../'
 import { Barchart, Piechart } from '../'
 import Icon from '../icons/Icon'
 import "./analysis.scss"
 
 export default function Analysis() {
 
-    // const [toggle, setToggle] = useState(false);
+    const [toggle, setToggle] = useState(false);
 
-    // const isToggleToolTip = () => setToggle((toggle) => !toggle);
+    const isToggleToolTip = () => setToggle((toggle) => !toggle);
 
+    console.log(toggle)
 
     return (
         <div className="analysis-wrapper">
@@ -19,8 +21,11 @@ export default function Analysis() {
             </div> */}
             <header>
                 <h1 className="title">Chart Analysis</h1>
-                <div className="tooltip" data-tip='custom show' data-event='click focus'>
-                    <Icon name="Notification" widht="20" height="20" fill="#e0d2d2" />
+                <div>
+                    <div className="tooltip" onClick={isToggleToolTip}>
+                        <Icon name="Notification" widht="20" height="20" fill="#e0d2d2" />
+                    </div>
+                    {toggle && <Tooltip />}
                 </div>
             </header>
             <div className="chart-wrapper">

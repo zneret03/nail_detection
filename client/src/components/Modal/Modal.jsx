@@ -20,6 +20,7 @@ function Modal({ setMyFile, files }) {
         setMyFile(specific_file)
     }
 
+
     //console.log(initialState)
 
     const onSubmit = () => {
