@@ -4,7 +4,7 @@ import "./piechart.scss";
 const ATTRIBUTES = {
     color: "#7a80a0",
     position: "middle",
-    size: "15px",
+    size: "20px",
     dy: 5,
 };
 
@@ -33,7 +33,7 @@ export default function Piechart() {
                 >
                     <tspan
                         style={{
-                            fontSize: "15px",
+                            fontSize: "20px",
                         }}
                     >
                         {label}
@@ -55,23 +55,25 @@ export default function Piechart() {
     ];
 
     return (
-        <PieChart width={220} height={150} className="pie-wrapper">
-            <Pie
-                data={data01}
-                dataKey="value"
-                nameKey="name"
-                cx="70%"
-                cy="50%"
-                innerRadius={55}
-                outerRadius={65}
-                fill="#8884d8"
-            >
-                <Label
-                    content={<CustomLabel threshold={"100%"} label={"Liver Corrisis"} />}
-                />
-                <Cell fill="#2C3855" />
-                <Cell fill="#E1F1FF" />
-            </Pie>
-        </PieChart>
+        <section className="wrapper">
+            <PieChart width={460} height={330} className="pie-wrapper">
+                <Pie
+                    data={data01}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="70%"
+                    cy="50%"
+                    innerRadius={100}
+                    outerRadius={140}
+                    fill="#8884d8"
+                >
+                    <Label
+                        content={<CustomLabel threshold={"100%"} label={"Liver Corrisis"} />}
+                    />
+                    <Cell fill="#2C3855" />
+                    <Cell fill="#E1F1FF" />
+                </Pie>
+            </PieChart>
+        </section>
     );
 }

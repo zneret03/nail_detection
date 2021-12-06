@@ -1,5 +1,13 @@
+.wrapper {
+  margin-right: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .pie-wrapper {
   display: flex;
   align-items: center;
   flex-direction: column;
+  text-align: center;
 }

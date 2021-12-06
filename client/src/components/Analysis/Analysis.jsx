@@ -32,9 +32,9 @@ export default function Analysis() {
                 <Barchart />
                 <div className="piechart">
                     <Piechart />
+                    {/* <Piechart />
                     <Piechart />
-                    <Piechart />
-                    <Piechart />
+                    <Piechart /> */}
                 </div>
             </div>
         </div>

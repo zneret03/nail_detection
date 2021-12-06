@@ -9,13 +9,15 @@
     box-shadow: 5px 10px 30px #ece7e7;
     background-color: #fff;
     padding: 20px 20px;
-    width: 350px;
-    height: 400px;
+    width: 360px;
+    height: 480px;
 
     .content {
       margin: 0 auto;
       max-width: 320px;
+      max-height: 100px;
       text-align: center;
+      overflow: auto;
 
       strong {
         color: red;
