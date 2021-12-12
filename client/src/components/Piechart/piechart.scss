@@ -1,11 +1,18 @@
-.wrapper {
-  margin-right: 160px;
+.pie-main-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  width: 500px;
+  margin: 0 auto;
+
+  .pie-title {
+    font-size: 25px;
+  }
 }
 
 .pie-wrapper {
+  margin-right: 180px;
   display: flex;
   align-items: center;
   flex-direction: column;

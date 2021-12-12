@@ -10,7 +10,21 @@
     background-color: #fff;
     padding: 20px 20px;
     width: 360px;
-    height: 480px;
+    height: auto;
+
+    .show-result {
+      outline: none;
+      border: none;
+      color: var(--white);
+      padding: 8px 20px;
+      background: var(--dark-navy);
+      border-radius: var(--border-radius);
+      cursor: pointer;
+
+      &:hover {
+        background: var(--light-navy);
+      }
+    }
 
     .content {
       margin: 0 auto;

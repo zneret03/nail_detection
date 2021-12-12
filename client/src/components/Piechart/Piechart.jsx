@@ -55,16 +55,17 @@ export default function Piechart() {
     ];
 
     return (
-        <section className="wrapper">
-            <PieChart width={460} height={330} className="pie-wrapper">
+        <section className="pie-main-wrapper">
+            <span className="pie-title">Nail disease detected</span>
+            <PieChart width={460} height={290} className="pie-wrapper">
                 <Pie
                     data={data01}
                     dataKey="value"
                     nameKey="name"
                     cx="70%"
                     cy="50%"
-                    innerRadius={100}
-                    outerRadius={140}
+                    innerRadius={90}
+                    outerRadius={120}
                     fill="#8884d8"
                 >
                     <Label
