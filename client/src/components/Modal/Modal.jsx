@@ -1,20 +1,29 @@
 //import { useState } from 'react';
 import { motion } from 'framer-motion'
 import { objectAssign } from '../../utils/ReusableSyntax'
-import { withRouter, useHistory } from 'react-router-dom';
+import { withRouter, useHistory, useLocation } from 'react-router-dom';
 import HttpRequest from 'axios';
 import "./modal.scss";
 
 const initialState = {
+    lastModified: 0,
+    lastModifiedDate: "",
     name: "",
-    preview: ""
+    path: "",
+    preview: "",
+    size: 0,
+    type: "",
+    webkitRelativePath: "",
 }
 
 function Modal({ setMyFile, files }) {
 
-    //const [message, setMessage] = useState({ status: false, message: "" });
+    //const [message, setMessage] = useState({ status: false, message: "" })
+
 
     const history = useHistory();
+    const location = useLocation();
+
     files.length > 0 && objectAssign(files, initialState)
 
     const isClose = () => {
@@ -25,12 +34,23 @@ function Modal({ setMyFile, files }) {
 
     const onSubmit = () => {
         try {
-
             // if (files[0].size > 2000000) {
             //     return setMessage({ status: true, message: "Image should be greater than 2mb in size" })
             // }
 
-            HttpRequest.post("/images", initialState).then((response) => {
+            // const data = new FormData();
+            // data.append("file", files[0].path)
+            // data.append("filename", files[0].name)
+
+            const config = {
+                name: files[0].name,
+                path: files[0].path,
+                preview: files[0].preview,
+                size: files[0].size,
+                type: files[0].type,
+            }
+
+            HttpRequest.post("/images", config).then((response) => {
                 if (response.status === 404) {
                     return console.log("Error 404, please try again later")
                 }
@@ -38,10 +58,16 @@ function Modal({ setMyFile, files }) {
                 if (response.status === 400) {
                     return console.log("Error 400, Bad Request")
                 }
+
+                console.log(response.data)
             });
 
             //setMessage({ status: false, message: "" })
 
+            if(location.pathname === "/dashboard"){
+                return isClose()
+            }
+            
             history.push('/dashboard');
         }
         catch (error) {

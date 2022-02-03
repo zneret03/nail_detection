@@ -1,6 +1,12 @@
 .panel-wrapper {
   display: flex;
   gap: 20px;
-  padding: 30px 15px;
   font-family: "Nunito Semibold";
+  position: relative;
+
+  .sub-wrapper {
+    display: flex;
+    gap: 20px;
+    padding: 30px 15px;
+  }
 }
