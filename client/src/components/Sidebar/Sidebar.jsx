@@ -1,9 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import { useDropzone } from "react-dropzone";
 import { AnimatePresence } from "framer-motion";
 import { useHistory, withRouter } from "react-router-dom";
+import HttpRequest from '../../api'
 import { Modal } from "../";
 import Icon from "../icons/Icon";
+import { NailContext } from '../../context/NailProvider';
+import { UploadedContext } from '../../context/UploadedProvider';
 import "./sidebar.scss";
 
 const colorStyle = {
@@ -19,14 +22,50 @@ function Sidebar() {
   const [isFiles, setIsFiles] = useState(false);
   const [myFile, setMyFile] = useState([]);
 
+  const {dispatch} = useContext(NailContext)
+  const {uploaded} = useContext(UploadedContext)
+
   const ACTIONS = ["imageUpload", "imageDetection", "classification", "reset"];
 
   const history = useHistory();
 
-//   const isClickUpload = () => {
-//     isClick({ status: false, currentIndex: 0 });
-//     setClickUpload(true);
-//   };
+  const resetImage = () => {
+    HttpRequest.post("/destroyWindows", { message: "Successfully Reset" }).then(
+      (response) => {
+        if (response.status === 404) {
+          return console.log("Error 404, please try again later");
+        }
+
+        if (response.status === 400) {
+          return console.log("Error 400, Bad Request");
+        }
+
+        if (response.status === 200) {
+          dispatch({ type: "segmentNail", config: { ...response } });
+          //setBase({...response})
+        }
+      }
+    );
+  };
+
+  const segmentImage = async () => {
+    await HttpRequest.post("/images", {file : uploaded}).then((response) => {
+      if (response.status === 404) {
+        // return setMessage({
+        //   status: true,
+        //   message: "Error 404, please try again later",
+        // });
+      }
+
+      if (response.status === 400) {
+        // return setMessage({ status: true, message: "Error 400, Bad Request" });
+      }
+
+      if (response.status === 200) {
+        dispatch({ type: "segmentNail", config: { ...response } });
+      }
+    });
+  };
 
   const isNotClickUpload = () => setClickUpload(false);
 
@@ -36,20 +75,16 @@ function Sidebar() {
     isNotClickUpload();
 
     if (ACTIONS[index] === ACTIONS[0]) {
-      //return alert("image upload");
+      return segmentImage();
     }
 
     if (ACTIONS[index] === ACTIONS[1]) {
-      //return alert("Segmentation");
+      // return segmentImage();
     }
 
     if (ACTIONS[index] === ACTIONS[2]) {
-      //return alert("Classification");
+        return resetImage()
     }
-
-    // if (ACTIONS[index] === ACTIONS[3]) {
-    //   //return alert("Reset");
-    // }
 
     if (ACTIONS[index] === ACTIONS[3]) {
       return history.push("/");

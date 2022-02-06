@@ -1,3 +1,17 @@
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--navy);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--white);
+  border: 3px solid var(--white);
+  border-radius: 10px;
+}
+
 :root {
   --dark-navy: #02152f;
   --light-navy: #2c3855;
