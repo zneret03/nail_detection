@@ -36,32 +36,9 @@ def receiveImages():
             "segmented": [image, img_blur, canny, img_grcut]
         }
 
-        # "image": image,
-        # "canny_edge": canny,
-        # "largest_contour": img_contour,
-        # "segmented_image": img_grcut
-
         response_pickled = jsonpickle.encode(config)
 
         return response_pickled
-
-
-@app.route("/destroyWindows", methods=["POST"])
-def destroyWindows():
-    cv2.destroyAllWindows()
-
-    config = {
-        "segmented": []
-    }
-
-    # "image": image,
-    # "canny_edge": canny,
-    # "largest_contour": img_contour,
-    # "segmented_image": img_grcut
-
-    response_pickled = jsonpickle.encode(config)
-
-    return response_pickled
 
 
 @ app.route("/members", methods=["GET"])
