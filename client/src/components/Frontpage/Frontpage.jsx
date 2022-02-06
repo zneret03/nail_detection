@@ -9,7 +9,7 @@ import "./frontpage.scss";
 
 export default function Frontpage() {
     const [isFiles, setIsFiles] = useState(false);
-    const [myFile, setMyFile] = useState([]);
+    const [myFile, setMyFile] = useState(undefined);
 
     //** Test request to the backend */
     // const getRequest = () => {
@@ -46,7 +46,7 @@ export default function Frontpage() {
     });
 
     useEffect(() => {
-        if (myFile.length > 0) {
+        if (myFile !== undefined) {
             setIsFiles(true);
         } else {
             setIsFiles(false);

@@ -1,9 +1,10 @@
-//import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { motion } from 'framer-motion'
-import { objectAssign } from '../../utils/ReusableSyntax'
+import { objectAssign} from '../../utils/ReusableSyntax'
 import { withRouter, useHistory, useLocation } from 'react-router-dom';
-import HttpRequest from 'axios';
+import { CroppedImage } from '../';
 import "./modal.scss";
+import { UploadedContext } from '../../context/UploadedProvider';
 
 const initialState = {
     lastModified: 0,
@@ -18,8 +19,9 @@ const initialState = {
 
 function Modal({ setMyFile, files }) {
 
-    //const [message, setMessage] = useState({ status: false, message: "" })
-
+    const [message, setMessage] = useState({ status: false, message: "" })
+    const [croppedImage, setCroppedImage] = useState(undefined);
+    const {dispatch} = useContext(UploadedContext)
 
     const history = useHistory();
     const location = useLocation();
@@ -32,37 +34,15 @@ function Modal({ setMyFile, files }) {
         setMyFile(specific_file)
     }
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
         try {
             // if (files[0].size > 2000000) {
             //     return setMessage({ status: true, message: "Image should be greater than 2mb in size" })
             // }
 
-            // const data = new FormData();
-            // data.append("file", files[0].path)
-            // data.append("filename", files[0].name)
-
-            const config = {
-                name: files[0].name,
-                path: files[0].path,
-                preview: files[0].preview,
-                size: files[0].size,
-                type: files[0].type,
+            if(croppedImage){
+              dispatch({type : "uploadedImage", config : croppedImage  })
             }
-
-            HttpRequest.post("/images", config).then((response) => {
-                if (response.status === 404) {
-                    return console.log("Error 404, please try again later")
-                }
-
-                if (response.status === 400) {
-                    return console.log("Error 400, Bad Request")
-                }
-
-                console.log(response.data)
-            });
-
-            //setMessage({ status: false, message: "" })
 
             if(location.pathname === "/dashboard"){
                 return isClose()
@@ -71,30 +51,46 @@ function Modal({ setMyFile, files }) {
             history.push('/dashboard');
         }
         catch (error) {
-            console.log(error.message)
+          setMessage({status : true, message : "image is not clear, please try another one"})
         }
     }
 
     return (
-        <div className="modal-wrapper">
-            <div className="modal-content">
-                <motion.div className="card" initial={{ opacity: 0, y: 0 }} animate={{ opacity: 1, y: 10 }} exit={{ opacity: 0, y: 0 }}>
-                    <section>
-                        <img src={initialState.preview} alt={initialState.name} />
-                        {/* {message.status && (
+      <div className="modal-wrapper">
+        <div className="modal-content">
+          <motion.div
+            className="card"
+            initial={{ opacity: 0, y: 0 }}
+            animate={{ opacity: 1, y: 10 }}
+            exit={{ opacity: 0, y: 0 }}
+          >
+            <section>
+              <CroppedImage
+                imageToCrop={files[0]?.preview}
+                onImageCropped={(croppedImage) => setCroppedImage(croppedImage)}
+              />
+              {message.status && (
                             <div className="error-message">
-                                <span>{message}</span>
+                                <span>{message.message}</span>
                             </div>
-                        )} */}
-                        <div className="button-wrapper">
-                            <button type="button" className="cancel-btn" onClick={isClose}>Cancel</button>
-                            <button type="button" className="proceed-btn" onClick={onSubmit}>Proceed</button>
-                        </div>
-                    </section>
-                </motion.div>
-            </div>
+                        )}
+              <div className="button-wrapper">
+                <button type="button" className="cancel-btn" onClick={isClose}>
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="proceed-btn"
+                  onClick={onSubmit}
+                >
+                  Proceed
+                </button>
+              </div>
+            </section>
+          </motion.div>
         </div>
-    )
+      </div>
+    );
 }
 
 export default withRouter(Modal)

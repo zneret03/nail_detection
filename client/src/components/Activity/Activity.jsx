@@ -1,3 +1,5 @@
+import {useContext} from 'react';
+import { NailContext } from '../../context/NailProvider';
 import { Months } from "../../utils/month";
 import "./activity.scss";
 
@@ -8,7 +10,9 @@ export default function Activity() {
     const year = date.getFullYear();
     const dateToday = `${month} ${day}, ${year}`;
 
-    const imageSegmentation = ["sample1.png", "sample2.png", "sample3.png", "sample4.png"]
+    const {nailSegmentation} = useContext(NailContext)
+
+    //const imageSegmentation = ["sample1.png", "sample2.png", "sample3.png", "sample4.png"]
 
     return (
         <div className="activity-wrapper">
@@ -16,9 +20,9 @@ export default function Activity() {
                 Activity area
             </div>
             <span>{dateToday}</span>
-            {imageSegmentation.map((images) => (
-                <div className="image-segmentation">
-                    <img src={`images/${images}`} alt="" />
+            {nailSegmentation.data?.segmented.map((images, index) => (
+                <div className="image-segmentation" key={index}>
+                    <img src={`data:image/jpeg;base64,${images}`} alt="" />
                 </div>
             ))}
         </div>
