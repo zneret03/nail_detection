@@ -4,7 +4,10 @@ import { objectAssign} from '../../utils/ReusableSyntax'
 import { withRouter, useHistory, useLocation } from 'react-router-dom';
 import { CroppedImage } from '../';
 import "./modal.scss";
+
+//**Context APIS */
 import { UploadedContext } from '../../context/UploadedProvider';
+import {ErrorContext} from "../../context/ErrorProvider"
 
 const initialState = {
     lastModified: 0,
@@ -19,9 +22,10 @@ const initialState = {
 
 function Modal({ setMyFile, files }) {
 
-    const [message, setMessage] = useState({ status: false, message: "" })
+    //const [message, setMessage] = useState({ status: false, message: "" })
     const [croppedImage, setCroppedImage] = useState(undefined);
     const {dispatch} = useContext(UploadedContext)
+    const {handlerDispatch} = useContext(ErrorContext)
 
     const history = useHistory();
     const location = useLocation();
@@ -34,11 +38,10 @@ function Modal({ setMyFile, files }) {
         setMyFile(specific_file)
     }
 
-    const onSubmit = async () => {
-        try {
-            // if (files[0].size > 2000000) {
-            //     return setMessage({ status: true, message: "Image should be greater than 2mb in size" })
-            // }
+    const onSubmit = () => {
+            if (files[0].size < 2000) {
+               return handlerDispatch({type : "errorHandler", config : {status : true, message : "Image minimum size is 2mb"}})
+            }
 
             if(croppedImage){
               dispatch({type : "uploadedImage", config : croppedImage  })
@@ -49,10 +52,6 @@ function Modal({ setMyFile, files }) {
             }
             
             history.push('/dashboard');
-        }
-        catch (error) {
-          setMessage({status : true, message : "image is not clear, please try another one"})
-        }
     }
 
     return (
@@ -69,11 +68,6 @@ function Modal({ setMyFile, files }) {
                 imageToCrop={files[0]?.preview}
                 onImageCropped={(croppedImage) => setCroppedImage(croppedImage)}
               />
-              {message.status && (
-                            <div className="error-message">
-                                <span>{message.message}</span>
-                            </div>
-                        )}
               <div className="button-wrapper">
                 <button type="button" className="cancel-btn" onClick={isClose}>
                   Cancel

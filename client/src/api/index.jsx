@@ -6,7 +6,7 @@ function httpRequest(method, url, request) {
         .catch(error => Promise.reject(error))
 }
 
-export default {
+const exportObjects = {
     get(url, request) {
         return httpRequest('get', url, request)
     },
@@ -24,4 +24,4 @@ export default {
     },
 }
 
-//export default Request
+export default exportObjects

@@ -12,6 +12,11 @@
   border-radius: 10px;
 }
 
+button {
+  outline: none;
+  border: none;
+}
+
 :root {
   --dark-navy: #02152f;
   --light-navy: #2c3855;

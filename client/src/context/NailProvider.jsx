@@ -23,8 +23,10 @@ const NailProvider = ({children}) => {
 
     const [nailSegmentation, dispatch] = useReducer(reducer, initialState)
 
+    const isCheck = nailSegmentation.data?.segmented.length > 0 ? true: false
+
     return (
-        <NailContext.Provider value={{nailSegmentation, dispatch}}>
+        <NailContext.Provider value={{nailSegmentation, dispatch, isCheck}}>
             {children}
         </NailContext.Provider>
     )

@@ -2,12 +2,15 @@ import { useState, useEffect, useCallback, useContext } from "react";
 import { useDropzone } from "react-dropzone";
 import { AnimatePresence } from "framer-motion";
 import { useHistory, withRouter } from "react-router-dom";
-import HttpRequest from '../../api'
+import HttpRequest from "../../api";
 import { Modal } from "../";
 import Icon from "../icons/Icon";
-import { NailContext } from '../../context/NailProvider';
-import { UploadedContext } from '../../context/UploadedProvider';
 import "./sidebar.scss";
+
+/**Context APIS */
+import { NailContext } from "../../context/NailProvider";
+import { UploadedContext } from "../../context/UploadedProvider";
+import { ErrorContext } from "../../context/ErrorProvider";
 
 const colorStyle = {
   black: "#000",
@@ -22,13 +25,17 @@ function Sidebar() {
   const [isFiles, setIsFiles] = useState(false);
   const [myFile, setMyFile] = useState([]);
 
-  const {dispatch} = useContext(NailContext)
-  const {uploaded} = useContext(UploadedContext)
+  const { dispatch, isCheck } = useContext(NailContext);
+  const { handlerDispatch } = useContext(ErrorContext);
+  const { uploaded } = useContext(UploadedContext);
 
   const ACTIONS = ["imageUpload", "imageDetection", "classification", "reset"];
 
   const history = useHistory();
 
+  /**
+   * Reset all the images uploaded in the server
+   */
   const resetImage = () => {
     HttpRequest.post("/destroyWindows", { message: "Successfully Reset" }).then(
       (response) => {
@@ -42,29 +49,55 @@ function Sidebar() {
 
         if (response.status === 200) {
           dispatch({ type: "segmentNail", config: { ...response } });
+          handlerDispatch({
+            type: "errorHandler",
+            config: { status: false, message: "" },
+          });
           //setBase({...response})
         }
       }
     );
   };
 
+  /**
+   * uploading base64 images for efficiency and avoiding saving images for bloated files
+   * decoding base64 opencv output for visualitation output
+   */
   const segmentImage = async () => {
-    await HttpRequest.post("/images", {file : uploaded}).then((response) => {
-      if (response.status === 404) {
-        // return setMessage({
-        //   status: true,
-        //   message: "Error 404, please try again later",
-        // });
-      }
+    try {
 
-      if (response.status === 400) {
-        // return setMessage({ status: true, message: "Error 400, Bad Request" });
-      }
+      await HttpRequest.post("/images", { file: uploaded }).then((response) => {
+        if (response.status === 404) {
+          return handlerDispatch({
+            type: "errorHandler",
+            config: {
+              status: true,
+              message: "Error 404, please try again later",
+            },
+          });
+        }
 
-      if (response.status === 200) {
-        dispatch({ type: "segmentNail", config: { ...response } });
-      }
-    });
+        if (response.status === 400) {
+          return handlerDispatch({
+            type: "errorHandler",
+            config: { status: true, message: "Error 400, Bad Request" },
+          });
+        }
+
+        if (response.status === 200) {
+          dispatch({ type: "segmentNail", config: { ...response } });
+          handlerDispatch({
+            type: "errorHandler",
+            config: { status: false, message: "" },
+          });
+        }
+      });
+    } catch (error) {
+      handlerDispatch({
+        type: "errorHandler",
+        config: { status: true, message: "image is not clear :( " },
+      });
+    }
   };
 
   const isNotClickUpload = () => setClickUpload(false);
@@ -79,11 +112,11 @@ function Sidebar() {
     }
 
     if (ACTIONS[index] === ACTIONS[1]) {
-      // return segmentImage();
+      // return Classification
     }
 
     if (ACTIONS[index] === ACTIONS[2]) {
-        return resetImage()
+      return resetImage();
     }
 
     if (ACTIONS[index] === ACTIONS[3]) {
@@ -91,29 +124,27 @@ function Sidebar() {
     }
   };
 
-  const onDrop = useCallback(
-    (acceptedFiles) => {
-        if (acceptedFiles.length > 1) {
-            setMyFile([]);
-        } else {
-            setMyFile(
-                acceptedFiles.map((file) =>
-                    Object.assign(file, {
-                        preview: URL.createObjectURL(file),
-                    })
-                )
-            );
-        }
-    },
-    []
-);
+  const onDrop = useCallback((acceptedFiles) => {
+    if (acceptedFiles.length > 1) {
+      setMyFile([]);
+    } else {
+      setMyFile(
+        acceptedFiles.map((file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        )
+      );
+    }
+  }, []);
 
   const { getRootProps, getInputProps, open } = useDropzone({
     noClick: true,
     noKeyboard: true,
     accept: "image/jpeg, image/png",
-    onDrop
+    onDrop,
   });
+
 
   useEffect(() => {
     if (myFile.length > 0) {
@@ -122,7 +153,6 @@ function Sidebar() {
       setIsFiles(false);
     }
   }, [myFile]);
-
 
   const items = [
     {
@@ -147,7 +177,6 @@ function Sidebar() {
     },
   ];
 
-
   return (
     <>
       {isFiles && (
@@ -160,7 +189,8 @@ function Sidebar() {
         <section>
           <div {...getRootProps({ className: "dropzone" })}>
             <input {...getInputProps()} />
-            <div
+            <button
+              disabled={isCheck}
               className="items"
               onClick={open}
               style={{
@@ -185,7 +215,7 @@ function Sidebar() {
               >
                 Image upload
               </span>
-            </div>
+            </button>
           </div>
           {items.map((item, index) => {
             const isCheck = click.status && click.currentIndex === index;
