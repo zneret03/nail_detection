@@ -46,7 +46,7 @@ export default function Frontpage() {
     });
 
     useEffect(() => {
-        if (myFile !== undefined) {
+        if (myFile !== undefined && myFile.length !== 0) {
             setIsFiles(true);
         } else {
             setIsFiles(false);

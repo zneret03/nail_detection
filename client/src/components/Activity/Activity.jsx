@@ -1,5 +1,6 @@
 import {useContext} from 'react';
 import { NailContext } from '../../context/NailProvider';
+import { ErrorContext } from '../../context/ErrorProvider';
 import { Months } from "../../utils/month";
 import "./activity.scss";
 
@@ -11,20 +12,24 @@ export default function Activity() {
     const dateToday = `${month} ${day}, ${year}`;
 
     const {nailSegmentation} = useContext(NailContext)
-
-    //const imageSegmentation = ["sample1.png", "sample2.png", "sample3.png", "sample4.png"]
+    const { handler } = useContext(ErrorContext);
 
     return (
-        <div className="activity-wrapper">
-            <div className="title">
-                Activity area
+      <div className="activity-wrapper">
+        <div className="title">Activity area</div>
+        <span>{dateToday}</span>
+        
+        {handler.status ? (
+          <div className="error-message">
+            <span>{handler.message}</span>
+          </div>
+        ) : (
+          nailSegmentation.data?.segmented.map((images, index) => (
+            <div className="image-segmentation" key={index}>
+              <img src={`data:image/jpeg;base64,${images}`} alt="" />
             </div>
-            <span>{dateToday}</span>
-            {nailSegmentation.data?.segmented.map((images, index) => (
-                <div className="image-segmentation" key={index}>
-                    <img src={`data:image/jpeg;base64,${images}`} alt="" />
-                </div>
-            ))}
-        </div>
+          ))
+        )}
+      </div>
     );
 }

@@ -22,15 +22,6 @@
       border-radius: var(--border-radius);
       background: var(--super-white);
 
-      .error-message {
-        width: 100%;
-        background: rgb(235, 120, 120);
-        padding: 10px 0;
-        text-indent: 10px;
-        color: #fff;
-        border-left: 3px solid red;
-      }
-
       .close-btn {
         position: absolute;
         right: 10px;

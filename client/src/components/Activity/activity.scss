@@ -7,6 +7,24 @@
   overflow: auto;
   scrollbar-width: 5px;
 
+  .error-message {
+    margin: 5px 0;
+    width: 100%;
+    background: rgb(235, 120, 120);
+    padding: 10px 0;
+    text-indent: 10px;
+    color: #fff;
+    border-left: 3px solid red;
+    border-radius: 5px;
+
+    span {
+      font-family: "Nunito Regular";
+      color: var(--light-navy);
+      color: rgb(255, 255, 255);
+      font-size: 15px;
+    }
+  }
+
   .title {
     font-size: 24px;
     color: var(--dark-navy);
