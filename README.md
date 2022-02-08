@@ -2,7 +2,9 @@
 
 Finger Nail Disease Detection is a standalone application that will detect the early stage of systemic disease using the color and texture of the fingernails in our hands, this project automatically detect the anomalies and output a early stage of differeny systemic diseases, also this project use SVM supervised machine learning approach along with canny edge detection for finger nail edge detection also this project is built in python flask for backend and electron + reactjs in front-end.
 
-![demo](https://github.com/zneret03/drilon7/blob/development/static/preview.png)
+![demo](https://github.com/zneret03/naik_detection/blob/development/static/preview.png)
+
+<br/>
 
 ## Technologies
 
@@ -11,9 +13,13 @@ Finger Nail Disease Detection is a standalone application that will detect the e
 - [sass](https://sass-lang.com/)
 - [flask](https://flask.palletsprojects.com/en/2.0.x/)
 
+<br/>
+
 ## Getting Started
 
 This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running follow these simple example steps.
+
+<br/>
 
 ### Prerequisites
 
@@ -38,6 +44,8 @@ To install python dependencies go to flask folder `cd flask-server` then create 
 source ./venv/bin/activate
 ```
 
+<br/>
+
 ## Dependecies
 
 ```
@@ -49,6 +57,8 @@ pip install -r requirements.txt
 ```
 npm install
 ```
+
+<br/>
 
 ## Development
 
