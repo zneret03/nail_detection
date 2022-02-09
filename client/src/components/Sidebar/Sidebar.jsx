@@ -25,11 +25,11 @@ function Sidebar() {
   const [isFiles, setIsFiles] = useState(false);
   const [myFile, setMyFile] = useState([]);
 
-  const { dispatch, isCheck } = useContext(NailContext);
+  const { nailSegmentation, dispatch, isCheck } = useContext(NailContext);
   const { handlerDispatch } = useContext(ErrorContext);
   const { uploaded } = useContext(UploadedContext);
 
-  const ACTIONS = ["imageUpload", "imageDetection", "classification", "reset"];
+  const ACTIONS = ["imageUpload", "imageDetection", "imageExtraction", "classification", "reset"];
 
   const history = useHistory();
 
@@ -100,6 +100,49 @@ function Sidebar() {
     }
   };
 
+  const featureExtraction = async() => {
+    try {
+      await HttpRequest.post("/featureExtraction", { file: nailSegmentation.data?.segmented[3] }).then((response) => {
+
+        //return error 404 if page not found
+        if (response.status === 404) {
+          return handlerDispatch({
+            type: "errorHandler",
+            config: {
+              status: true,
+              message: "Error 404, please try again later",
+            },
+          });
+        }
+
+        //return error 400 if there is something bad happen in http request
+        if (response.status === 400) {
+          return handlerDispatch({
+            type: "errorHandler",
+            config: { status: true, message: "Error 400, Bad Request" },
+          });
+        }
+
+        if (response.status === 200) {
+          //dispatch({ type: "segmentNail", config: { ...response } });
+          console.log({...response})
+          //Catch server response
+          handlerDispatch({
+            type: "errorHandler",
+            config: { status: false, message: "" },
+          });
+        }
+      });
+    } catch (error) {
+      
+      //return error 500 if there is something happened in the server
+      handlerDispatch({
+        type: "errorHandler",
+        config: { status: true, message: "image is not clear :( " },
+      });
+    }
+  }
+
   const isNotClickUpload = () => setClickUpload(false);
 
   const onMouseClick = (event, index) => {
@@ -112,14 +155,19 @@ function Sidebar() {
     }
 
     if (ACTIONS[index] === ACTIONS[1]) {
-      // return Classification
+      return featureExtraction()
     }
 
     if (ACTIONS[index] === ACTIONS[2]) {
+      return alert("Classification")
+    }
+    
+
+    if (ACTIONS[index] === ACTIONS[3]) {
       return resetImage();
     }
 
-    if (ACTIONS[index] === ACTIONS[3]) {
+    if (ACTIONS[index] === ACTIONS[4]) {
       return history.push("/");
     }
   };
@@ -162,16 +210,21 @@ function Sidebar() {
     },
     {
       id: 2,
+      title: "Feature Extraction",
+      icon: "Extraction",
+    },
+    {
+      id: 3,
       title: "Classification",
       icon: "Classification",
     },
     {
-      id: 3,
+      id: 4,
       title: "Reset",
       icon: "Reset",
     },
     {
-      id: 4,
+      id: 5,
       title: "Exit",
       icon: "Exit",
     },

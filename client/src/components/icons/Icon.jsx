@@ -6,6 +6,7 @@ import {
     ImageUpload,
     ImageDetection,
     Classification,
+    Extraction,
     Reset,
     Exit,
 } from "./";
@@ -14,6 +15,8 @@ export default function Icon({ name, width, height, fill }) {
     switch (name) {
         case "Add":
             return <Add width={width} height={height} fill={fill} />;
+        case "Extraction":
+            return <Extraction width={width} height={height} fill={fill} />;
         case "Close":
             return <Close width={width} height={height} fill={fill} />;
         case "ImageUpload":
