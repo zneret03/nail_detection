@@ -1,3 +1,4 @@
+from typing import Sized
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
@@ -11,6 +12,7 @@ class Segmentation:
     # Default values
     path = ""
 
+    Size = 50
     perimeter = []
     unified = []
     max_index = []

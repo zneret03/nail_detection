@@ -1,8 +1,11 @@
 from flask import Flask, request, Response
-from segmentation.segmentation import Segmentation
 import jsonpickle
 import cv2
 import base64
+
+# Class functions
+from segmentation.segmentation import Segmentation
+from segmentation.featureExtraction import FeatureExtraction
 
 app = Flask(__name__)
 
@@ -14,6 +17,17 @@ def toBase64Format(img):
     base64_split = base64_format.split("'")[1]
 
     return base64_split
+
+
+@app.route("/featureExtraction", methods=["GET", "POST"])
+def extractFeatures():
+    requestJson = request.get_json()
+
+    extract = FeatureExtraction(requestJson['file'])
+
+    print(extract.texture_extraction())
+
+    return "Successfully Extracted"
 
 
 @app.route("/images", methods=["GET", "POST"])
