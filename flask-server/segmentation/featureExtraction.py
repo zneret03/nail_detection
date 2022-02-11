@@ -16,7 +16,7 @@ class FeatureExtraction:
     def __init__(self, path):
         self.path = path
 
-    def color_moments(self, img):  # Read a color picture
+    def color_moments(self, img):
         if img is None:
             return
         # RGB space converted to HSV space
@@ -29,35 +29,90 @@ class FeatureExtraction:
         h_mean = np.mean(h)  # np.sum(h)/float(N)
         s_mean = np.mean(s)  # np.sum(s)/float(N)
         v_mean = np.mean(v)  # np.sum(v)/float(N)
-        array_mean = [h_mean, s_mean, v_mean]
-        hsv_mean = np.mean(array_mean)
-        color_feature.append(hsv_mean)
+        # array_mean = [h_mean,s_mean,v_mean]
+        # hsv_mean = np.mean(array_mean)
+        # color_feature.append(hsv_mean)
+        # One-stage moment placement feature array
+        color_feature.extend([h_mean, s_mean, v_mean])
 
+        # Secondary moments (standard difference STD)
         h_std = np.std(h)  # np.sqrt(np.mean(abs(h - h.mean())**2))
         s_std = np.std(s)  # np.sqrt(np.mean(abs(s - s.mean())**2))
         v_std = np.std(v)  # np.sqrt(np.mean(abs(v - v.mean())**2))
-        array_std = [h_std, s_std, v_std]
-        hsv_std = np.mean(array_std)
-        color_feature.append(hsv_std)
+        # array_std = [h_std,s_std,v_std]
+        # hsv_std = np.mean(array_std)
+        # color_feature.append(hsv_std)
+        # Second order moment placed in a feature array
+        color_feature.extend([h_std, s_std, v_std])
 
+    #  Three-order moment (slope Skewness)
         h_skewness = np.mean(abs(h - h.mean()) ** 3)
         s_skewness = np.mean(abs(s - s.mean()) ** 3)
         v_skewness = np.mean(abs(v - v.mean()) ** 3)
         h_thirdMoment = h_skewness ** (1. / 3)
         s_thirdMoment = s_skewness ** (1. / 3)
         v_thirdMoment = v_skewness ** (1. / 3)
-        array_skew = [h_thirdMoment, s_thirdMoment, v_thirdMoment]
-        hsv_skew = skew(array_skew)
-        color_feature.append(hsv_skew)
+        #array_skew = [h_thirdMoment, s_thirdMoment, v_thirdMoment]
+        # hsv_skew = skew(array_skew)
+        # color_feature.append(hsv_skew)
+        #color_feature['Skewness'] = hsv_skew
+        # Three-order moments in the feature array
+        color_feature.extend([h_thirdMoment, s_thirdMoment, v_thirdMoment])
 
-        h_kurtosis = kurtosis(h)
-        s_kurtosis = kurtosis(s)
-        v_kurtosis = kurtosis(v)
-        array_kurtosis = [h_kurtosis, s_kurtosis, v_kurtosis]
-        hsv_kurtosis = kurtosis(array_kurtosis, axis=None)
-        color_feature.append(hsv_kurtosis)
+    #   Kurtosis
+
+        h_kurtosis = kurtosis(h, axis=None)
+        s_kurtosis = kurtosis(s, axis=None)
+        v_kurtosis = kurtosis(v, axis=None)
+        #color_feature['Kurtosis'] = hsv_kurtosis
+        color_feature.extend([h_kurtosis, s_kurtosis, v_kurtosis])
 
         return color_feature
+
+    def nothing(self, x):
+        pass
+
+    def white_pixels(self, args):
+        white_pix = np.sum(args == 255)
+
+        return white_pix
+
+    def black_pixels(self, args):
+        black_pix = np.sum(args == 0)
+
+        return black_pix
+
+    def shape_extractor(self):
+        if self.path:
+            # print(self.path)
+            decoded_data = base64.b64decode(self.path)
+            np_data = np.fromstring(decoded_data, np.uint8)
+
+            # decoded base64
+            image = cv2.imdecode(np_data, cv2.IMREAD_UNCHANGED)
+
+            # cv2.namedWindow('image')
+
+            ret, thresh = cv2.threshold(
+                image, 20, 250, cv2.THRESH_BINARY_INV)
+
+            canny = cv2.Canny(thresh, 50, 50)
+
+            total_area = self.black_pixels(thresh)
+            perimeter_count = self.white_pixels(canny)
+
+            contour, hierarchy = cv2.findContours(
+                canny, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+            data = [[total_area, perimeter_count, 50, 50]]
+
+            df = pd.DataFrame(
+                data, columns=['Area', 'Perimeter', 'Compactness', 'Eccentricity'])
+
+            print(df)
+            cv2.imshow("original", contour)
+            cv2.waitKey(0)
+        # return "hello world"
 
     def texture_extractor(self, dataset):
         image_dataset = pd.DataFrame()
