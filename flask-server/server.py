@@ -2,9 +2,12 @@ from flask import Flask, request, Response
 import jsonpickle
 import cv2
 import base64
+from PIL import Image
+
 
 # Class functions
-from segmentation.segmentation import Segmentation
+#from segmentation.segmentation import Segmentation
+from segmentation.segmentation2 import ImageSegmentation
 from segmentation.featureExtraction import FeatureExtraction
 
 app = Flask(__name__)
@@ -26,6 +29,7 @@ def extractFeatures():
     extract = FeatureExtraction(requestJson['file'])
 
     print(extract.texture_extraction())
+    # print(extract.shape_extractor())
 
     return "Successfully Extracted"
 
@@ -36,7 +40,8 @@ def receiveImages():
     if request.method == "POST":
         requestJson = request.get_json()
 
-        segment = Segmentation(requestJson['file'])
+        #segment = Segmentation(requestJson['file'])
+        segment = ImageSegmentation(requestJson['file'])
         image, img_blur, canny, img_contour, img_grcut = segment.segmentationProces()
 
         image = toBase64Format(image)
