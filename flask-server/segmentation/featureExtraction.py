@@ -12,6 +12,7 @@ class FeatureExtraction:
 
     SIZE = 50
     path = ""
+    values = []
     columns = ['h_mean', 's_mean', 'v_mean', 'h_std', 's_std', 'v_std', 'h_skew', 's_skew', 'v_skew', 'h_kurtosis',
                's_kurtosis', 'v_kurtosis']
 
@@ -144,7 +145,7 @@ class FeatureExtraction:
             break
         return image_dataset
 
-    def texture_extraction(self):
+    def featureExtraction(self):
         if self.path:
 
             decoded_data = base64.b64decode(self.path)
@@ -157,11 +158,7 @@ class FeatureExtraction:
 
             image_texture_feature = self.texture_extractor(resizeImage)
             image_color_feature = self.color_moments(resizeImage)
-            #feature_values = pd.DataFrame(self.values, columns=self.cols)
-            # feature_values.reset_index()
-            # print(feature_values)
+            color_feature_balues = pd.DataFrame(
+                image_color_feature, columns=self.columns)
 
-            print(image_texture_feature)
-            print(image_color_feature)
-
-            # return image_texture_feature, image_color_feature
+            return image_texture_feature, color_feature_balues

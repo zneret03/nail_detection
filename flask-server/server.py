@@ -28,9 +28,10 @@ def extractFeatures():
     requestJson = request.get_json()
 
     extract = FeatureExtraction(requestJson['file'])
+    image_texture_feature, color_feature_balues = extract.featureExtraction()
 
-    print(extract.texture_extraction())
-    # print(extract.shape_extractor())
+    print(image_texture_feature)
+    print(color_feature_balues)
 
     return "Successfully Extracted"
 
