@@ -115,7 +115,7 @@ class ImageSegmentation:
 
         # Boundingbox will be the final perimmeter of the image
         boundingBoxes = [cv2.boundingRect(c) for c in unified]
-        print("BoundingBox:", boundingBoxes)
+        #print("BoundingBox:", boundingBoxes)
 
         return contoured_img, contours, perimeter, hull, unified, boundingBoxes
 
@@ -145,7 +145,7 @@ class ImageSegmentation:
             else:
                 pt2 = c
 
-        print(pt1, pt2)
+        #print(pt1, pt2)
 
         # Create 2 mask
         # Rectangular mask
@@ -201,7 +201,7 @@ class ImageSegmentation:
             # solving Area
             areaCon = M["m00"]
 
-            print("Area", areaCon)
+            #print("Area", areaCon)
 
             # Solving the radius using area
             pi = 3.14159
@@ -209,7 +209,7 @@ class ImageSegmentation:
 
             radius = math.sqrt(area / pi)
 
-            print(radius)
+            # print(radius)
 
             return M, cx, cy, area, radius
 
