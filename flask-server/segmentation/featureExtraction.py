@@ -12,38 +12,38 @@ class FeatureExtraction:
 
     SIZE = 50
     path = ""
+    columns = ['h_mean', 's_mean', 'v_mean', 'h_std', 's_std', 'v_std', 'h_skew', 's_skew', 'v_skew', 'h_kurtosis',
+               's_kurtosis', 'v_kurtosis']
 
     def __init__(self, path):
         self.path = path
 
     def color_moments(self, img):
+        # img = cv2.imread(filename)  # Read a color picture
+        img = cv2.resize(img, (50, 50))
+
         if img is None:
             return
+
         # RGB space converted to HSV space
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         h, s, v = cv2.split(hsv)
 
-        color_feature = []  # Initialize color characteristics
+        data = []
 
-        # One-stage moment (mean mean)
+    #  One-stage moment (mean mean)
         h_mean = np.mean(h)  # np.sum(h)/float(N)
         s_mean = np.mean(s)  # np.sum(s)/float(N)
         v_mean = np.mean(v)  # np.sum(v)/float(N)
-        # array_mean = [h_mean,s_mean,v_mean]
-        # hsv_mean = np.mean(array_mean)
-        # color_feature.append(hsv_mean)
         # One-stage moment placement feature array
-        color_feature.extend([h_mean, s_mean, v_mean])
+        data.extend([h_mean, s_mean, v_mean])
 
-        # Secondary moments (standard difference STD)
+    #  Secondary moments (standard difference STD)
         h_std = np.std(h)  # np.sqrt(np.mean(abs(h - h.mean())**2))
         s_std = np.std(s)  # np.sqrt(np.mean(abs(s - s.mean())**2))
         v_std = np.std(v)  # np.sqrt(np.mean(abs(v - v.mean())**2))
-        # array_std = [h_std,s_std,v_std]
-        # hsv_std = np.mean(array_std)
-        # color_feature.append(hsv_std)
         # Second order moment placed in a feature array
-        color_feature.extend([h_std, s_std, v_std])
+        data.extend([h_std, s_std, v_std])
 
     #  Three-order moment (slope Skewness)
         h_skewness = np.mean(abs(h - h.mean()) ** 3)
@@ -52,20 +52,18 @@ class FeatureExtraction:
         h_thirdMoment = h_skewness ** (1. / 3)
         s_thirdMoment = s_skewness ** (1. / 3)
         v_thirdMoment = v_skewness ** (1. / 3)
-        #array_skew = [h_thirdMoment, s_thirdMoment, v_thirdMoment]
-        # hsv_skew = skew(array_skew)
-        # color_feature.append(hsv_skew)
-        #color_feature['Skewness'] = hsv_skew
         # Three-order moments in the feature array
-        color_feature.extend([h_thirdMoment, s_thirdMoment, v_thirdMoment])
+        data.extend([h_thirdMoment, s_thirdMoment, v_thirdMoment])
 
     #   Kurtosis
 
         h_kurtosis = kurtosis(h, axis=None)
         s_kurtosis = kurtosis(s, axis=None)
         v_kurtosis = kurtosis(v, axis=None)
-        #color_feature['Kurtosis'] = hsv_kurtosis
-        color_feature.extend([h_kurtosis, s_kurtosis, v_kurtosis])
+        data.extend([h_kurtosis, s_kurtosis, v_kurtosis])
+
+        data = np.array(data).flatten()
+        color_feature = [data]
 
         return color_feature
 
@@ -109,9 +107,10 @@ class FeatureExtraction:
             df = pd.DataFrame(
                 data, columns=['Area', 'Perimeter', 'Compactness', 'Eccentricity'])
 
-            print(df)
-            cv2.imshow("original", contour)
-            cv2.waitKey(0)
+            # print(df)
+
+            # cv2.imshow("original", thresh)
+            # cv2.waitKey(0)
         # return "hello world"
 
     def texture_extractor(self, dataset):
@@ -158,6 +157,11 @@ class FeatureExtraction:
 
             image_texture_feature = self.texture_extractor(resizeImage)
             image_color_feature = self.color_moments(resizeImage)
+            #feature_values = pd.DataFrame(self.values, columns=self.cols)
+            # feature_values.reset_index()
+            # print(feature_values)
 
             print(image_texture_feature)
             print(image_color_feature)
+
+            # return image_texture_feature, image_color_feature
