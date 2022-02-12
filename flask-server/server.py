@@ -2,6 +2,7 @@ from flask import Flask, request, Response
 import jsonpickle
 import cv2
 import base64
+import pandas as pd
 from PIL import Image
 
 
