@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useContext } from "react";
 import { useDropzone } from "react-dropzone";
 import { AnimatePresence } from "framer-motion";
 import { useHistory, withRouter } from "react-router-dom";
+import {types} from '../../formats'
 import HttpRequest from "../../api";
 import { Modal } from "../";
 import Icon from "../icons/Icon";
@@ -189,7 +190,7 @@ function Sidebar() {
   const { getRootProps, getInputProps, open } = useDropzone({
     noClick: true,
     noKeyboard: true,
-    accept: "image/jpeg, image/png",
+    accept: types,
     onDrop,
   });
 

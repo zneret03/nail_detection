@@ -1,0 +1,1 @@
+export const types = "image/jpeg, image/png, image/bmp"

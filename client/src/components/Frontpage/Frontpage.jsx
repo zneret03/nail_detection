@@ -4,6 +4,7 @@ import { Icon } from "../icons";
 import { useDropzone } from "react-dropzone";
 //import HttpRequest from "../../api";
 import { AnimatePresence } from "framer-motion";
+import {types} from '../../formats'
 //import axios from 'axios'
 import "./frontpage.scss";
 
@@ -41,7 +42,7 @@ export default function Frontpage() {
     const { getRootProps, getInputProps, open } = useDropzone({
         noClick: true,
         noKeyboard: true,
-        accept: "image/jpeg, image/png",
+        accept: types,
         onDrop,
     });
 
