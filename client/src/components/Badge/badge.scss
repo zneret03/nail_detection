@@ -1,0 +1,17 @@
+.badge-wrapper {
+  position: relative;
+  right: 10px;
+  bottom: 5px;
+
+  span {
+    position: absolute;
+    right: 0;
+    transform: translate(8px, -8px);
+    background-color: rgb(224, 85, 85);
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 4px 8px;
+    font-size: 10px;
+    color: #fff;
+  }
+}

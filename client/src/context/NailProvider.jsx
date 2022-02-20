@@ -12,7 +12,7 @@ const NailProvider = ({children}) => {
 
     const reducer = (state = initialState, action) => {
         switch(action.type){
-            case ACTION.segmentNail : 
+            case ACTION.segmentNail: 
                 return {...state, ...action.config}
             case ACTION.reset : 
                 return initialState

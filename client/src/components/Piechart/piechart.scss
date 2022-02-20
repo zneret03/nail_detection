@@ -6,8 +6,16 @@
   width: 500px;
   margin: 0 auto;
 
-  .pie-title {
-    font-size: 25px;
+  .custom-tooltip {
+    border-radius: 5px;
+    background: var(--light-navy);
+    color: var(--green);
+    border: 2px solid #cad1f6;
+  }
+
+  .label {
+    padding: 5px 20px;
+    font-size: 14px;
   }
 }
 
