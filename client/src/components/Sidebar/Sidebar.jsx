@@ -12,6 +12,7 @@ import "./sidebar.scss";
 import { NailContext } from "../../context/NailProvider";
 import { UploadedContext } from "../../context/UploadedProvider";
 import { ErrorContext } from "../../context/ErrorProvider";
+import {DiseaseContext} from "../../context/DiseaseProvider"
 
 const colorStyle = {
   black: "#000",
@@ -26,9 +27,10 @@ function Sidebar() {
   const [isFiles, setIsFiles] = useState(false);
   const [myFile, setMyFile] = useState([]);
 
-  const { nailSegmentation, dispatch, isCheck } = useContext(NailContext);
+  const { dispatch, isCheck } = useContext(NailContext);
   const { handlerDispatch } = useContext(ErrorContext);
   const { uploaded } = useContext(UploadedContext);
+  const {detectionDispatch} = useContext(DiseaseContext)
 
   const ACTIONS = ["imageUpload", "imageDetection", "imageExtraction", "classification", "reset"];
 
@@ -38,6 +40,7 @@ function Sidebar() {
    * Reset all the images uploaded in the server
    */
   const resetImage = () => {
+
     HttpRequest.post("/destroyWindows", { message: "Successfully Reset" }).then(
       (response) => {
         if (response.status === 404) {
@@ -50,6 +53,7 @@ function Sidebar() {
 
         if (response.status === 200) {
           dispatch({ type: "segmentNail", config: { ...response } });
+          detectionDispatch({ type: "classify", config: { ...response } });
           handlerDispatch({
             type: "errorHandler",
             config: { status: false, message: "" },
@@ -67,7 +71,7 @@ function Sidebar() {
   const segmentImage = async () => {
     try {
 
-      await HttpRequest.post("/images", { file: uploaded }).then((response) => {
+      await HttpRequest.post("/images", { file: uploaded.croppedImage }).then((response) => {
         if (response.status === 404) {
           return handlerDispatch({
             type: "errorHandler",
@@ -101,9 +105,9 @@ function Sidebar() {
     }
   };
 
-  const featureExtraction = async() => {
+  const classification = async() => {
     try {
-      await HttpRequest.post("/featureExtraction", { file: nailSegmentation.data?.segmented[3] }).then((response) => {
+      await HttpRequest.post("/classify", { path: uploaded.path }).then((response) => {
 
         //return error 404 if page not found
         if (response.status === 404) {
@@ -113,7 +117,7 @@ function Sidebar() {
               status: true,
               message: "Error 404, please try again later",
             },
-          });
+          })  ;
         }
 
         //return error 400 if there is something bad happen in http request
@@ -125,8 +129,7 @@ function Sidebar() {
         }
 
         if (response.status === 200) {
-          //dispatch({ type: "segmentNail", config: { ...response } });
-          console.log({...response})
+          detectionDispatch({ type: "classify", config: { ...response } });
           //Catch server response
           handlerDispatch({
             type: "errorHandler",
@@ -155,20 +158,20 @@ function Sidebar() {
       return segmentImage();
     }
 
-    if (ACTIONS[index] === ACTIONS[1]) {
-      return featureExtraction()
-    }
+    // if (ACTIONS[index] === ACTIONS[1]) {
+    //   return featureExtraction()
+    // }
 
-    if (ACTIONS[index] === ACTIONS[2]) {
-      return alert("Classification")
+    if (ACTIONS[index] === ACTIONS[1]) {
+      return classification()
     }
     
 
-    if (ACTIONS[index] === ACTIONS[3]) {
+    if (ACTIONS[index] === ACTIONS[2]) {
       return resetImage();
     }
 
-    if (ACTIONS[index] === ACTIONS[4]) {
+    if (ACTIONS[index] === ACTIONS[3]) {
       return history.push("/");
     }
   };
@@ -209,23 +212,23 @@ function Sidebar() {
       title: "Image Detection",
       icon: "ImageDetection",
     },
+    // {
+    //   id: 2,
+    //   title: "Feature Extraction",
+    //   icon: "Extraction",
+    // },
     {
       id: 2,
-      title: "Feature Extraction",
-      icon: "Extraction",
-    },
-    {
-      id: 3,
       title: "Classification",
       icon: "Classification",
     },
     {
-      id: 4,
+      id: 3,
       title: "Reset",
       icon: "Reset",
     },
     {
-      id: 5,
+      id: 4,
       title: "Exit",
       icon: "Exit",
     },

@@ -12,7 +12,14 @@ $color: #dbdde6;
   }
 
   .tooltip {
+    background: rgba(177, 161, 161, 0.5);
+    padding: 8px 12px;
+    border-radius: 50%;
     cursor: pointer;
+
+    &:hover {
+      background: var(--light-navy);
+    }
   }
 
   .title {

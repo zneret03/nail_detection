@@ -1,26 +1,31 @@
-import UseToggle from '../../hook/UseToggle'
+//import UseToggle from '../../hook/UseToggle'
 import { motion } from 'framer-motion'
 import "./tooltip.scss"
 
-export default function Tooltip() {
+export default function Tooltip({messages}) {
 
-    const [onChangeStatus, setOnChangeStatus] = UseToggle()
+    //const [onChangeStatus, setOnChangeStatus] = UseToggle()
 
-    const textChange = onChangeStatus ? "disease detected" : "Healthy"
-    const message = onChangeStatus ? (
+    //const textChange = messages.accuracy > 50 ? "disease detected" : "Healthy"
+
+
+    const isCheck = messages?.accuracy < 50 && messages !== undefined
+    const message = isCheck ? (
         <p>
             The software does not detect any symptoms for nail disease. Therefore,
             your fingernails are healthy
         </p>
     ) : (
         <p>
-            The detection reach 95% for <strong>nail clubbing</strong>, and these
-            are the following disease detection such as (Inflammatory bowel disease,
-            Chronic Bronchitis, Cirrhosis, Congenital heart disease,
-            Atrioventricular malformations)
+            The detection reach {(Math.round(messages?.accuracy * 100) / 100).toFixed(1)}% for <strong>{messages?.prediction_name}</strong>, and these
+            are the following disease detection such as ({messages?.associate_diseases})
         </p>
     );
-    const imageDisplay = onChangeStatus ? `Happy.svg` : `Sad.svg`
+
+    const imageDisplay = isCheck ? `Happy.svg` : `Sad.svg`
+    const errorImage = 'feeling-sorry.svg'
+    const errorMessage = "Sorry no there is no output to display, please try again :("
+
     return (
         <div className="tooltip-wrapper">
             <motion.div
@@ -30,14 +35,14 @@ export default function Tooltip() {
                 exit={{ opacity: 0, y: 0 }}
             >
                 <div className="content">
-                    {message}
+                    {messages === undefined ? errorMessage : message}
                 </div>
-                <img className="svg-image" src={`./images/illustrations/${imageDisplay}`} alt="" />
+                <img className="svg-image" src={messages?.accuracy === 0 ? `./images/illustrations/${errorImage}` :`./images/illustrations/${imageDisplay}`} alt="" />
 
                 {/** to show what success looks like for demo presentation only */}
-                <div style={{ textAlign: "right" }}>
+                {/* <div style={{ textAlign: "right" }}>
                     <button type="button" onClick={setOnChangeStatus} className="show-result">{textChange}</button>
-                </div>
+                </div> */}
             </motion.div>
         </div>
     );

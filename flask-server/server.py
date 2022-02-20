@@ -10,6 +10,7 @@ from PIL import Image
 #from segmentation.segmentation import Segmentation
 from segmentation.segmentation2 import ImageSegmentation
 from segmentation.featureExtraction import FeatureExtraction
+from segmentation.prediction import Prediction
 
 app = Flask(__name__)
 
@@ -21,6 +22,30 @@ def toBase64Format(img):
     base64_split = base64_format.split("'")[1]
 
     return base64_split
+
+
+@app.route("/classify", methods=["GET", "POST"])
+def classification():
+    requestJson = request.get_json()
+
+    # print(requestJson['file'])
+
+    predict = Prediction(requestJson['path'])
+
+    prediction_name, Accuracy, diseases = predict.predictOutput()
+
+    remainingVal = 100 - float(Accuracy)
+
+    config = {
+        "prediction_name": prediction_name,
+        "remaining_percent": remainingVal,
+        "accuracy": Accuracy,
+        "associate_diseases": diseases
+    }
+
+    response_pickled = jsonpickle.encode(config)
+
+    return response_pickled
 
 
 @app.route("/featureExtraction", methods=["GET", "POST"])
@@ -67,12 +92,15 @@ def receiveImages():
         return response_pickled
 
 
-@app.route("/destroyWindows", methods=["POST"])
+@app.route("/destroyWindows", methods=["GET", "POST"])
 def destroyWindows():
     cv2.destroyAllWindows()
 
     config = {
-        "segmented": []
+        "segmented": [],
+        "prediction_name": "empty",
+        "accuracy": 0
+
     }
 
     response_pickled = jsonpickle.encode(config)
