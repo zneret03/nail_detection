@@ -18,7 +18,7 @@ export default function Tooltip({messages}) {
     ) : (
         <p>
             The detection reach {(Math.round(messages?.accuracy * 100) / 100).toFixed(1)}% for <strong>{messages?.prediction_name}</strong>, and these
-            are the following disease detection such as ({messages?.associate_diseases})
+            are the following disease detection such as {messages?.associate_diseases}
         </p>
     );
 
