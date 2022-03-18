@@ -39,12 +39,18 @@ function Modal({ setMyFile, files }) {
     }
 
     const onSubmit = () => {
+
+            const config = {
+              croppedImage,
+              path : files[0].path
+            }
+
             if (files[0].size < 2000) {
                return handlerDispatch({type : "errorHandler", config : {status : true, message : "Image minimum size is 2mb"}})
             }
 
             if(croppedImage){
-              dispatch({type : "uploadedImage", config : croppedImage  })
+              dispatch({type : "uploadedImage", config : config  })
             }
 
             if(location.pathname === "/dashboard"){

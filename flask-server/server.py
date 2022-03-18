@@ -10,6 +10,7 @@ from PIL import Image
 #from segmentation.segmentation import Segmentation
 from segmentation.segmentation2 import ImageSegmentation
 from segmentation.featureExtraction import FeatureExtraction
+from segmentation.prediction import Prediction
 
 app = Flask(__name__)
 
@@ -23,17 +24,41 @@ def toBase64Format(img):
     return base64_split
 
 
-@app.route("/featureExtraction", methods=["GET", "POST"])
-def extractFeatures():
+@app.route("/classify", methods=["GET", "POST"])
+def classification():
     requestJson = request.get_json()
 
-    extract = FeatureExtraction(requestJson['file'])
-    image_texture_feature, color_feature_balues = extract.featureExtraction()
+    # print(requestJson['file'])
 
-    print(image_texture_feature)
-    print(color_feature_balues)
+    predict = Prediction(requestJson['path'])
 
-    return "Successfully Extracted"
+    prediction_name, Accuracy, diseases = predict.predictOutput()
+
+    remainingVal = 100 - float(Accuracy)
+
+    config = {
+        "prediction_name": prediction_name,
+        "remaining_percent": remainingVal,
+        "accuracy": Accuracy,
+        "associate_diseases": diseases
+    }
+
+    response_pickled = jsonpickle.encode(config)
+
+    return response_pickled
+
+
+# @app.route("/featureExtraction", methods=["GET", "POST"])
+# def extractFeatures():
+#     requestJson = request.get_json()
+
+#     extract = FeatureExtraction(requestJson['file'])
+#     image_texture_feature, color_feature_balues = extract.featureExtraction()
+
+#     print(image_texture_feature)
+#     print(color_feature_balues)
+
+#     return "Successfully Extracted"
 
 
 @app.route("/images", methods=["GET", "POST"])
@@ -67,12 +92,15 @@ def receiveImages():
         return response_pickled
 
 
-@app.route("/destroyWindows", methods=["POST"])
+@app.route("/destroyWindows", methods=["GET", "POST"])
 def destroyWindows():
     cv2.destroyAllWindows()
 
     config = {
-        "segmented": []
+        "segmented": [],
+        "prediction_name": "empty",
+        "accuracy": 0
+
     }
 
     response_pickled = jsonpickle.encode(config)
