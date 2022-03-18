@@ -52,12 +52,12 @@ class Prediction:
         # print(Result)
         itemindex = np.where(result == np.max(result))
 
-        reverse_mapping = ['Aloperia Areata', "Beau's Lines", 'Bluish Nail', 'Clubbing', "Darier's Disease", 'Eczema',
-                           "Half and Half",
-                           'Koilonychia', 'Leukonychia', "Muehrck-e's lines",
-                           'Onycholyci', 'Red Lunula', 'Splinter',
-                           "Terrys Nail", 'White Nail', 'Yellow Nails',
-                           'Healthy Nail']
+        reverse_mapping = ['Aloperia / Areata', "Beau's / Lines", 'Bluish / Nail', 'Clubbing', "Darier's / Disease", 'Eczema',
+                           "Half and Half / Nail",
+                           'Koilonychia', 'Leukonychia', "Muehrck-e's / lines",
+                           'Onycholyci', 'Red / Lunula', 'Splinter / Hemorrhage',
+                           "Terry's / Nails", 'White / Nail', 'Yellow / Nail',
+                           'Healthy / Nail']
         prediction_name = reverse_mapping[itemindex[1][0]]
         # print(prediction_name)
 
@@ -68,16 +68,17 @@ class Prediction:
         #       " with an accuracy of: " + Accuracy)
 
         switcher = {
-            "Beau's Lines": "Diabetes, Coronary thrombosis, Renal failure, Pneumonia",
+            "Beau's / Lines": "Diabetes, Coronary thrombosis, Renal failure, Pneumonia",
             "Clubbing": "Inflammatory bowel diease, Chronic Bronchitis, Cirrhosis, Congenital Heart disease, Atrioventricular Malformation",
-            "Half and Half": "Renal disease, HIV, Hemodialysis, Chronic Kidney Disease",
+            "Half and Half / Nail": "Renal disease, HIV, Hemodialysis, Chronic Kidney Disease",
             "Koilonychia": "Iron deficiency (Anemia), Hemochromatosis, Coronary Disease, Hypothyroidism",
-            "Leukonychia": "Hodgkin's disease, Congestive heart failure, Hypoalbuminemia, Chronic Liver Disease",
-            "Muehrck-e's lines": "Liver Disease, Hypoalbuminemia, Kidney disease, Malnutrition",
+            "Leukonychia": "Anemia, Hodgkin's disease, Congestive heart failure, Hypoalbuminemia, Chronic Liver Disease",
+            "Muehrck-e's / lines": "Liver Disease, Hypoalbuminemia, Kidney disease, Malnutrition",
             "Red lunula": "Collagen vascular disease, Alopcia areata, Cardiac Failure, Chronic Obstructive pulmonary disease, Cirrhosis, Psoriasis, Chronic Utricaria",
-            "Splinter": "Ulcer, Endocarditis, Psoriasis, Rheumatoid, arthritis, anemia, Juvenile cirrhosis, Diabetes",
-            "Terrys Nail": "Cirrhosis, Chronic hear failure, Diabetes mellitus, HIV, Malnutrition, Hyperthyroidism",
-            "Yellow Nails": "Lymphoedema, Recurrent pleural effusions, Bronchiectasis, Chronic bronchitis, Rheumatoid arthritis, Diabetes mellitus, liver and kidney problems"
+            "Splinter / Hemmorrage": "Heart Disease, Ulcer, Endocarditis, Psoriasis, Rheumatoid, arthritis, anemia, Juvenile cirrhosis, Diabetes",
+            "Terry's / Nails": "Cirrhosis, Chronic hear failure, Diabetes mellitus, HIV, Malnutrition, Hyperthyroidism",
+            "Yellow / Nail": "Lymphoedema, Recurrent pleural effusions, Bronchiectasis, Chronic bronchitis, Rheumatoid arthritis, Diabetes mellitus, liver and kidney problems",
+            "Healthy / Nail" : "Yours nails is healthy, there is no disease detected :)"
         }
 
         diseases = switcher.get(prediction_name, "nothing")

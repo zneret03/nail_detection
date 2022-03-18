@@ -22,7 +22,13 @@ export default function Analysis() {
         <h1 className="title">Chart Analysis</h1>
         <div>
           <Badge count={detection.data}>
-            <div className="tooltip" onClick={setIsToggle}>
+            <div
+              className="tooltip"
+              style={{
+                background: IsToggle ? "#2c3855" : "rgba(177, 161, 161, 0.5)",
+              }}
+              onClick={setIsToggle}
+            >
               <Icon name="Notification" widht="22" height="22" fill="#fff" />
             </div>
           </Badge>
@@ -32,10 +38,16 @@ export default function Analysis() {
       <div className="chart-wrapper">
         {/* <Barchart threshold={detection.data}/> */}
         <div className="piechart">
-          {detection.data?.accuracy !== 0 && Object.keys(detection).length > 0 ? (
-            <Piechart threshold={detection.data} /> 
+          {detection.data?.accuracy !== 0 &&
+          Object.keys(detection).length > 0 ? (
+            <Piechart threshold={detection.data} />
           ) : (
-            <img src={`/images/illustrations/analytics.svg`} alt="" width={450} height={450} />
+            <img
+              src={`/images/illustrations/analytics.svg`}
+              alt=""
+              width={450}
+              height={450}
+            />
           )}
           {/* <Piechart />
                     <Piechart />
