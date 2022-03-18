@@ -9,12 +9,13 @@ const ATTRIBUTES = {
   dy: 5,
 };
 
-
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
+    const label = payload && payload[0].name.split("/");
+
     return (
       <div className="custom-tooltip">
-        <p className="label">{`${payload[0].name} : ${payload[0].value}`}</p>
+        <p className="label">{`${label[0]} ${label[1]} : ${payload[0].value}`}</p>
       </div>
     );
   }
@@ -23,9 +24,11 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export default function Piechart({ threshold }) {
-
   const CustomLabel = ({ viewBox, threshold = 0, label }) => {
     const { cx, cy } = viewBox;
+
+    const donutLabel = label.split("/");
+
     return (
       <g>
         <text
@@ -47,11 +50,29 @@ export default function Piechart({ threshold }) {
           fontSize={ATTRIBUTES.size}
         >
           <tspan
+            dy={12}
             style={{
               fontSize: "20px",
             }}
           >
-            {label}
+            {donutLabel[0]}
+          </tspan>
+        </text>
+        <text
+          fill={ATTRIBUTES.color}
+          x={cx}
+          y={cy + 8}
+          dy={ATTRIBUTES.dy}
+          textAnchor={ATTRIBUTES.position}
+          fontSize={ATTRIBUTES.size}
+        >
+          <tspan
+            dy={35}
+            style={{
+              fontSize: "20px",
+            }}
+          >
+            {donutLabel[1]}
           </tspan>
         </text>
       </g>
@@ -63,8 +84,11 @@ export default function Piechart({ threshold }) {
       name: threshold?.prediction_name,
       value: Number(threshold?.accuracy),
     },
+    {
+      name: threshold?.prediction_name,
+      value: Number(threshold?.remaining_percent),
+    },
   ];
-
 
   return (
     <section className="pie-main-wrapper">
@@ -85,11 +109,9 @@ export default function Piechart({ threshold }) {
           <Label
             content={
               <CustomLabel
-                threshold={`${
-                  threshold && threshold.accuracy > 50.0
-                    ? (Math.round(threshold.accuracy * 100) / 100).toFixed(1)
-                    : "0"
-                }%`}
+                threshold={(
+                  threshold && Math.round(threshold.accuracy * 100) / 100
+                ).toFixed(1)}
                 label={threshold ? threshold.prediction_name : null}
               />
             }
@@ -97,7 +119,7 @@ export default function Piechart({ threshold }) {
           <Cell fill="#2C3855" />
           <Cell fill="#E1F1FF" />
         </Pie>
-        <Tooltip content={<CustomTooltip />}/>
+        <Tooltip content={<CustomTooltip />} />
         {/* <Legend  layout="vertical" verticalAlign="bottom" align="center" /> */}
       </PieChart>
     </section>

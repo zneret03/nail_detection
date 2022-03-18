@@ -48,17 +48,17 @@ def classification():
     return response_pickled
 
 
-@app.route("/featureExtraction", methods=["GET", "POST"])
-def extractFeatures():
-    requestJson = request.get_json()
+# @app.route("/featureExtraction", methods=["GET", "POST"])
+# def extractFeatures():
+#     requestJson = request.get_json()
 
-    extract = FeatureExtraction(requestJson['file'])
-    image_texture_feature, color_feature_balues = extract.featureExtraction()
+#     extract = FeatureExtraction(requestJson['file'])
+#     image_texture_feature, color_feature_balues = extract.featureExtraction()
 
-    print(image_texture_feature)
-    print(color_feature_balues)
+#     print(image_texture_feature)
+#     print(color_feature_balues)
 
-    return "Successfully Extracted"
+#     return "Successfully Extracted"
 
 
 @app.route("/images", methods=["GET", "POST"])
