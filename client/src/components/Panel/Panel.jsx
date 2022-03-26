@@ -5,7 +5,7 @@ export default function Panel() {
   return (
     <div className="panel-wrapper">
       <Sidebar />
-      <div class="sub-wrapper">
+      <div className="sub-wrapper">
         <Activity />
         <Analysis />
       </div>

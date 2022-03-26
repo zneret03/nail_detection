@@ -3,13 +3,12 @@ import jsonpickle
 import cv2
 import base64
 import pandas as pd
-from PIL import Image
 
 
 # Class functions
 #from segmentation.segmentation import Segmentation
 from segmentation.segmentation2 import ImageSegmentation
-from segmentation.featureExtraction import FeatureExtraction
+#from segmentation.featureExtraction import FeatureExtraction
 from segmentation.prediction import Prediction
 
 app = Flask(__name__)
@@ -100,7 +99,6 @@ def destroyWindows():
         "segmented": [],
         "prediction_name": "empty",
         "accuracy": 0
-
     }
 
     response_pickled = jsonpickle.encode(config)
@@ -108,9 +106,9 @@ def destroyWindows():
     return response_pickled
 
 
-@ app.route("/members", methods=["GET"])
-def members():
-    return {"members": ["Member 1", "Member 2", "Member 2"]}
+# @ app.route("/members", methods=["GET"])
+# def members():
+#     return {"members": ["Member 1", "Member 2", "Member 2"]}
 
 
 if __name__ == "__main__":

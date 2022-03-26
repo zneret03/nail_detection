@@ -1,10 +1,8 @@
 import keras
 from PIL import Image, ImageOps
 import numpy as np
-import cv2
-import base64
+from pathlib import Path
 
-from pandas import describe_option
 
 
 class Prediction:
@@ -20,7 +18,8 @@ class Prediction:
 
         # Load the model../input/nail-disease-final-data/nail diseases 11/bluish nail/18.PNG
         model = keras.models.load_model(
-            'C:\\Users\\Acer\\Downloads\\nail_detection\\flask-server\\segmentation\\mod.h5')
+             f'{Path().absolute()}\\segmentation\\mod.h5')
+
 
         # Create the array of the right shape to feed into the keras model
         # The 'length' or number of images you can put into the array is

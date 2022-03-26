@@ -28,9 +28,11 @@ function Sidebar() {
   const [myFile, setMyFile] = useState([]);
 
   const { dispatch, isCheck } = useContext(NailContext);
-  const { handlerDispatch } = useContext(ErrorContext);
+  const { handler, handlerDispatch } = useContext(ErrorContext);
   const { uploaded } = useContext(UploadedContext);
   const { detectionDispatch } = useContext(DiseaseContext);
+
+  console.log(uploaded.path ? true : false);
 
   const ACTIONS = [
     "imageUpload",
@@ -106,7 +108,11 @@ function Sidebar() {
     } catch (error) {
       handlerDispatch({
         type: "errorHandler",
-        config: { status: true, message: "image is not clear :( " },
+        config: {
+          status: true,
+          type: "errorHandler",
+          message: "image is not clear :( ",
+        },
       });
     }
   };
@@ -116,11 +122,24 @@ function Sidebar() {
       await HttpRequest.post("/classify", { path: uploaded.path }).then(
         (response) => {
           //return error 404 if page not found
+
+          if (handler.type === "errorHandler") {
+            return handlerDispatch({
+              type: "errorHandler",
+              config: {
+                status: true,
+                type: "errorHandler",
+                message: "Error 404, please try again later",
+              },
+            });
+          }
+
           if (response.status === 404) {
             return handlerDispatch({
               type: "errorHandler",
               config: {
                 status: true,
+                type: "errorHandler",
                 message: "Error 404, please try again later",
               },
             });

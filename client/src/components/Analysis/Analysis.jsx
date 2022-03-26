@@ -49,9 +49,6 @@ export default function Analysis() {
               height={450}
             />
           )}
-          {/* <Piechart />
-                    <Piechart />
-                    <Piechart /> */}
         </div>
       </div>
     </div>
