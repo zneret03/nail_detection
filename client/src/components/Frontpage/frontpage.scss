@@ -51,6 +51,13 @@ $padding-y: 50px;
     max-width: 320px;
     padding: $padding-y 15px;
 
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+    }
+
     .paragraph {
       margin: 15px 0;
       line-height: 5px;

@@ -1,31 +1,33 @@
 import { createContext, useReducer } from "react";
 
 const ACTION = {
-    errorHandler : "errorHandler"
-}
+  errorHandler: "errorHandler",
+  successHandler: "successHandler",
+};
 
-const initialState = {}
+const initialState = {};
 
-const ErrorContext = createContext()
+const ErrorContext = createContext();
 
-const ErrorProvider = ({children}) => {
-
-    const reducer = (state, action) => {
-        switch(action.type){
-            case ACTION.errorHandler:
-                return {...state, ...action.config}
-            default:
-                return state;
-        }
+const ErrorProvider = ({ children }) => {
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case ACTION.errorHandler:
+        return { ...state, ...action.config };
+      case ACTION.successHandler:
+        return { ...state, ...action.config };
+      default:
+        return state;
     }
+  };
 
-    const [handler, handlerDispatch] = useReducer(reducer, initialState)
+  const [handler, handlerDispatch] = useReducer(reducer, initialState);
 
-    return(
-        <ErrorContext.Provider value={{handler, handlerDispatch}}>
-            {children}
-        </ErrorContext.Provider>
-    )
-}
+  return (
+    <ErrorContext.Provider value={{ handler, handlerDispatch }}>
+      {children}
+    </ErrorContext.Provider>
+  );
+};
 
-export {ErrorProvider, ErrorContext}
+export { ErrorProvider, ErrorContext };
