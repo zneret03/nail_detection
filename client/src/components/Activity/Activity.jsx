@@ -14,13 +14,23 @@ export default function Activity() {
   const { nailSegmentation } = useContext(NailContext);
   const { handler } = useContext(ErrorContext);
 
+  console.log(handler);
+
+  const isHandler = handler.type === "successHandler";
+
   return (
     <div className="activity-wrapper">
       <div className="title">Activity area</div>
       <span>{dateToday}</span>
 
       {handler.status ? (
-        <div className="error-message">
+        <div
+          className="error-message"
+          style={{
+            borderLeft: `3.5px solid ${isHandler ? "green" : "red"}`,
+            background: isHandler ? "#059940" : "rgb(235, 120, 120)",
+          }}
+        >
           <span>{handler.message}</span>
         </div>
       ) : (
