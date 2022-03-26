@@ -1,5 +1,5 @@
 import { Home, Dashboard } from "./pages";
-import { HashRouter as Router, Route } from "react-router-dom";
+import { MemoryRouter as Router, Route } from "react-router-dom";
 import { NailProvider } from "./context/NailProvider";
 import { UploadedProvider } from "./context/UploadedProvider";
 import { ErrorProvider } from "./context/ErrorProvider";

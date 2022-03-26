@@ -75,7 +75,7 @@ class Prediction:
             "Leukonychia": "Anemia, Hodgkin's disease, Congestive heart failure, Hypoalbuminemia, Chronic Liver Disease",
             "Muehrck-e's / lines": "Liver Disease, Hypoalbuminemia, Kidney disease, Malnutrition",
             "Red lunula": "Collagen vascular disease, Alopcia areata, Cardiac Failure, Chronic Obstructive pulmonary disease, Cirrhosis, Psoriasis, Chronic Utricaria",
-            "Splinter / Hemmorrage": "Heart Disease, Ulcer, Endocarditis, Psoriasis, Rheumatoid, arthritis, anemia, Juvenile cirrhosis, Diabetes",
+            "Splinter / Hemorrhage": "Heart Disease, Ulcer, Endocarditis, Psoriasis, Rheumatoid, arthritis, anemia, Juvenile cirrhosis, Diabetes",
             "Terry's / Nails": "Cirrhosis, Chronic hear failure, Diabetes mellitus, HIV, Malnutrition, Hyperthyroidism",
             "Yellow / Nail": "Lymphoedema, Recurrent pleural effusions, Bronchiectasis, Chronic bronchitis, Rheumatoid arthritis, Diabetes mellitus, liver and kidney problems",
             "Healthy / Nail" : "Yours nails is healthy, there is no disease detected :)"
