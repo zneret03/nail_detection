@@ -1,5 +1,6 @@
 {
   "name": "nail_detection",
+  "productName": "nail_detection",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:5000",
@@ -9,6 +10,7 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.23.0",
     "cross-env": "^7.0.3",
+    "electron-is-dev": "^2.0.0",
     "framer-motion": "^4.1.17",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
@@ -27,7 +29,25 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "concurrently -k \"cross-env BROWSER=none npm start\" \"npm:electron\"",
-    "electron": "wait-on tcp:3000 && electron ."
+    "electron": "wait-on tcp:3000 && electron .",
+    "build-installer": "electron-builder"
+  },
+  "build": {
+    "appId": "nail_detection",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "src/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "installerIcon": "src/icon.ico",
+      "uninstallerIcon": "src/icon.ico",
+      "uninstallDisplayName": "nail detection uninstaller",
+      "license": "license.md",
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -49,8 +69,8 @@
   },
   "devDependencies": {
     "concurrently": "^6.3.0",
-    "electron": "^15.2.0",
-    "electron-is-dev": "^2.0.0",
+    "electron": "^15.0.0",
+    "electron-builder": "^22.11.7",
     "wait-on": "^6.0.0"
   }
 }

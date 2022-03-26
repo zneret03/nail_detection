@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useContext } from "react";
 import { useDropzone } from "react-dropzone";
 import { AnimatePresence } from "framer-motion";
 import { useHistory, withRouter } from "react-router-dom";
-import {types} from '../../formats'
+import { types } from "../../formats";
 import HttpRequest from "../../api";
 import { Modal } from "../";
 import Icon from "../icons/Icon";
@@ -12,7 +12,7 @@ import "./sidebar.scss";
 import { NailContext } from "../../context/NailProvider";
 import { UploadedContext } from "../../context/UploadedProvider";
 import { ErrorContext } from "../../context/ErrorProvider";
-import {DiseaseContext} from "../../context/DiseaseProvider"
+import { DiseaseContext } from "../../context/DiseaseProvider";
 
 const colorStyle = {
   black: "#000",
@@ -30,9 +30,15 @@ function Sidebar() {
   const { dispatch, isCheck } = useContext(NailContext);
   const { handlerDispatch } = useContext(ErrorContext);
   const { uploaded } = useContext(UploadedContext);
-  const {detectionDispatch} = useContext(DiseaseContext)
+  const { detectionDispatch } = useContext(DiseaseContext);
 
-  const ACTIONS = ["imageUpload", "imageDetection", "imageExtraction", "classification", "reset"];
+  const ACTIONS = [
+    "imageUpload",
+    "imageDetection",
+    "imageExtraction",
+    "classification",
+    "reset",
+  ];
 
   const history = useHistory();
 
@@ -40,7 +46,6 @@ function Sidebar() {
    * Reset all the images uploaded in the server
    */
   const resetImage = () => {
-
     HttpRequest.post("/destroyWindows", { message: "Successfully Reset" }).then(
       (response) => {
         if (response.status === 404) {
@@ -70,33 +75,34 @@ function Sidebar() {
    */
   const segmentImage = async () => {
     try {
+      await HttpRequest.post("/images", { file: uploaded.croppedImage }).then(
+        (response) => {
+          if (response.status === 404) {
+            return handlerDispatch({
+              type: "errorHandler",
+              config: {
+                status: true,
+                message: "Error 404, please try again later",
+              },
+            });
+          }
 
-      await HttpRequest.post("/images", { file: uploaded.croppedImage }).then((response) => {
-        if (response.status === 404) {
-          return handlerDispatch({
-            type: "errorHandler",
-            config: {
-              status: true,
-              message: "Error 404, please try again later",
-            },
-          });
-        }
+          if (response.status === 400) {
+            return handlerDispatch({
+              type: "errorHandler",
+              config: { status: true, message: "Error 400, Bad Request" },
+            });
+          }
 
-        if (response.status === 400) {
-          return handlerDispatch({
-            type: "errorHandler",
-            config: { status: true, message: "Error 400, Bad Request" },
-          });
+          if (response.status === 200) {
+            dispatch({ type: "segmentNail", config: { ...response } });
+            handlerDispatch({
+              type: "errorHandler",
+              config: { status: false, message: "" },
+            });
+          }
         }
-
-        if (response.status === 200) {
-          dispatch({ type: "segmentNail", config: { ...response } });
-          handlerDispatch({
-            type: "errorHandler",
-            config: { status: false, message: "" },
-          });
-        }
-      });
+      );
     } catch (error) {
       handlerDispatch({
         type: "errorHandler",
@@ -105,47 +111,47 @@ function Sidebar() {
     }
   };
 
-  const classification = async() => {
+  const classification = async () => {
     try {
-      await HttpRequest.post("/classify", { path: uploaded.path }).then((response) => {
+      await HttpRequest.post("/classify", { path: uploaded.path }).then(
+        (response) => {
+          //return error 404 if page not found
+          if (response.status === 404) {
+            return handlerDispatch({
+              type: "errorHandler",
+              config: {
+                status: true,
+                message: "Error 404, please try again later",
+              },
+            });
+          }
 
-        //return error 404 if page not found
-        if (response.status === 404) {
-          return handlerDispatch({
-            type: "errorHandler",
-            config: {
-              status: true,
-              message: "Error 404, please try again later",
-            },
-          })  ;
-        }
+          //return error 400 if there is something bad happen in http request
+          if (response.status === 400) {
+            return handlerDispatch({
+              type: "errorHandler",
+              config: { status: true, message: "Error 400, Bad Request" },
+            });
+          }
 
-        //return error 400 if there is something bad happen in http request
-        if (response.status === 400) {
-          return handlerDispatch({
-            type: "errorHandler",
-            config: { status: true, message: "Error 400, Bad Request" },
-          });
+          if (response.status === 200) {
+            detectionDispatch({ type: "classify", config: { ...response } });
+            //Catch server response
+            handlerDispatch({
+              type: "errorHandler",
+              config: { status: false, message: "" },
+            });
+          }
         }
-
-        if (response.status === 200) {
-          detectionDispatch({ type: "classify", config: { ...response } });
-          //Catch server response
-          handlerDispatch({
-            type: "errorHandler",
-            config: { status: false, message: "" },
-          });
-        }
-      });
+      );
     } catch (error) {
-      
       //return error 500 if there is something happened in the server
       handlerDispatch({
         type: "errorHandler",
         config: { status: true, message: "image is not clear :( " },
       });
     }
-  }
+  };
 
   const isNotClickUpload = () => setClickUpload(false);
 
@@ -163,9 +169,8 @@ function Sidebar() {
     // }
 
     if (ACTIONS[index] === ACTIONS[1]) {
-      return classification()
+      return classification();
     }
-    
 
     if (ACTIONS[index] === ACTIONS[2]) {
       return resetImage();
@@ -196,7 +201,6 @@ function Sidebar() {
     accept: types,
     onDrop,
   });
-
 
   useEffect(() => {
     if (myFile.length > 0) {
