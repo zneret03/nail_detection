@@ -82,6 +82,10 @@ function Modal({ setMyFile, files }) {
           animate={{ opacity: 1, y: 10 }}
           exit={{ opacity: 0, y: 0 }}
         >
+          <h1>Croping Section</h1>
+          <p>
+            cropping the image focus into the nail will give higher accuracy
+          </p>
           <section>
             <CroppedImage
               imageToCrop={files[0]?.preview}
