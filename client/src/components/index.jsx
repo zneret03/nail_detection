@@ -10,3 +10,4 @@ export { default as Piechart } from "./Piechart/Piechart";
 export { default as Tooltip } from "./Tooltip/Tooltip";
 export { default as CroppedImage } from "./CroppedImage/CroppedImage";
 export { default as Badge } from "./Badge/Badge";
+export { default as Guidelines } from "./Guidlines/Guidelines";

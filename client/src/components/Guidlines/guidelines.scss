@@ -1,0 +1,91 @@
+.guidelinesBackground {
+  position: absolute;
+  content: "";
+  height: 651px;
+  background: var(--dark-navy);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  clip-path: polygon(0 0, 100% 0%, calc(100% - 150px) 100%, 0% 100%);
+  width: 65%;
+}
+
+.guidelinesWrapper {
+  position: relative;
+  top: 70px;
+  z-index: 1;
+  padding: 0 130px;
+  font-family: var(--font-nunito);
+
+  .guidelines-title {
+    color: var(--light-slate);
+
+    &::after {
+      content: "How it works";
+      display: block;
+      font-size: 40px;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+
+  .btn-next {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      cursor: pointer;
+      margin-top: 30px;
+      text-align: right;
+      background-color: var(--dark-navy);
+      color: var(--white);
+      padding: 10px 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+
+      &:hover {
+        background-color: var(--light-navy);
+      }
+    }
+  }
+
+  .cardWrapper {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+
+    .card {
+      padding: 10px;
+      width: 240px;
+      height: auto;
+      border-radius: var(--border-radius);
+      background: #fff;
+      box-shadow: var(--box-shadow);
+
+      .card-illustration {
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .card-content {
+        padding: 0 20px 20px;
+
+        .title {
+          font-size: 18px;
+          color: var(--navy);
+        }
+
+        .description {
+          line-height: 1.2rem;
+          margin-top: 8px;
+          font-weight: normal;
+          font-size: 14px;
+          color: var(--dark-navy);
+        }
+      }
+    }
+  }
+}

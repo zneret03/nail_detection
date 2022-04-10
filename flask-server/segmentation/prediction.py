@@ -73,11 +73,11 @@ class Prediction:
             "Koilonychia": "Iron deficiency (Anemia), Hemochromatosis, Coronary Disease, Hypothyroidism",
             "Leukonychia": "Anemia, Hodgkin's disease, Congestive heart failure, Hypoalbuminemia, Chronic Liver Disease",
             "Muehrck-e's / lines": "Liver Disease, Hypoalbuminemia, Kidney disease, Malnutrition",
-            "Red lunula": "Collagen vascular disease, Alopcia areata, Cardiac Failure, Chronic Obstructive pulmonary disease, Cirrhosis, Psoriasis, Chronic Utricaria",
+            "Red / Lunula": "Collagen vascular disease, Alopcia areata, Cardiac Failure, Chronic Obstructive pulmonary disease, Cirrhosis, Psoriasis, Chronic Utricaria",
             "Splinter / Hemorrhage": "Heart Disease, Ulcer, Endocarditis, Psoriasis, Rheumatoid, arthritis, anemia, Juvenile cirrhosis, Diabetes",
             "Terry's / Nails": "Cirrhosis, Chronic hear failure, Diabetes mellitus, HIV, Malnutrition, Hyperthyroidism",
             "Yellow / Nail": "Lymphoedema, Recurrent pleural effusions, Bronchiectasis, Chronic bronchitis, Rheumatoid arthritis, Diabetes mellitus, liver and kidney problems",
-            "Healthy / Nail" : "Yours nails is healthy, there is no disease detected :)"
+            "Healthy / Nail" : "Your nail is healthy, there is no disease detected :)"
         }
 
         diseases = switcher.get(prediction_name, "nothing")
