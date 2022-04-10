@@ -20,7 +20,7 @@ const initialState = {
   webkitRelativePath: "",
 };
 
-function Modal({ setMyFile, files }) {
+function Modal({ setMyFile, files, children }) {
   //const [message, setMessage] = useState({ status: false, message: "" })
   const [croppedImage, setCroppedImage] = useState(undefined);
   const { dispatch } = useContext(UploadedContext);

@@ -4,6 +4,10 @@
   right: 0;
 
   .tooltip-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     border: 1px solid #f5eeee;
     border-radius: var(--border-radius);
     box-shadow: 5px 10px 30px #ece7e7;
@@ -11,6 +15,11 @@
     padding: 20px 20px;
     width: 360px;
     height: auto;
+
+    .svg-image {
+      width: 300px;
+      height: 300px;
+    }
 
     .show-result {
       outline: none;
@@ -29,7 +38,7 @@
     .content {
       margin: 0 auto;
       max-width: 320px;
-      max-height: 100px;
+      max-height: 140px;
       text-align: center;
       overflow: auto;
 
