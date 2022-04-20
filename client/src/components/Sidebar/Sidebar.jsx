@@ -32,8 +32,6 @@ function Sidebar() {
   const { uploaded } = useContext(UploadedContext);
   const { detectionDispatch } = useContext(DiseaseContext);
 
-  console.log(uploaded.path ? true : false);
-
   const ACTIONS = [
     "imageUpload",
     "imageDetection",
@@ -60,7 +58,10 @@ function Sidebar() {
 
         if (response.status === 200) {
           dispatch({ type: "segmentNail", config: { ...response } });
-          detectionDispatch({ type: "classify", config: { ...response } });
+          detectionDispatch({
+            type: "classify",
+            config: { ...response },
+          });
           handlerDispatch({
             type: "errorHandler",
             config: { status: false, message: "" },
@@ -118,6 +119,7 @@ function Sidebar() {
   };
 
   const classification = async () => {
+    detectionDispatch({ type: "loading" });
     try {
       await HttpRequest.post("/classify", { path: uploaded.path }).then(
         (response) => {
@@ -196,7 +198,7 @@ function Sidebar() {
     }
 
     if (ACTIONS[index] === ACTIONS[3]) {
-      return history.push("/");
+      return history.push("/home");
     }
   };
 

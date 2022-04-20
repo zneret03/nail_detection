@@ -78,7 +78,7 @@ def receiveImages():
 
         # im_arr: image in Numpy one-dim array format.
         config = {
-            "segmented": [image, img_blur, canny, img_grcut]
+            "segmented": [image, img_blur, canny, img_contour, img_grcut]
         }
 
         # "image": image,

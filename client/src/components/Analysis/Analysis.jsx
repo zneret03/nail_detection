@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Tooltip } from "../";
 import { Piechart, Badge } from "../";
 import UseToggle from "../../hook/UseToggle";
+import { BounceLoader, PulseLoader } from "react-spinners";
 import Icon from "../icons/Icon";
 import "./analysis.scss";
 
@@ -35,22 +36,29 @@ export default function Analysis() {
           {IsToggle && <Tooltip messages={detection.data} />}
         </div>
       </header>
-      <div className="chart-wrapper">
-        {/* <Barchart threshold={detection.data}/> */}
-        <div className="piechart">
-          {detection.data?.accuracy !== 0 &&
-          Object.keys(detection).length > 0 ? (
-            <Piechart threshold={detection.data} />
-          ) : (
-            <img
-              src={`/images/illustrations/analytics.svg`}
-              alt=""
-              width={450}
-              height={450}
-            />
-          )}
+
+      {detection.loading ? (
+        <div className="loading-bar">
+          <PulseLoader color={"#02152f"} loading={true} size={15} margin={5} />
         </div>
-      </div>
+      ) : (
+        <div className="chart-wrapper">
+          {/* <Barchart threshold={detection.data}/> */}
+          <div className="piechart">
+            {detection.data?.accuracy !== 0 &&
+            Object.keys(detection).length > 0 ? (
+              <Piechart threshold={detection.data} />
+            ) : (
+              <img
+                src={`/images/illustrations/analytics.svg`}
+                alt=""
+                width={450}
+                height={450}
+              />
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

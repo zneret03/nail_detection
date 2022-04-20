@@ -1,4 +1,4 @@
-import { Home, Dashboard } from "./pages";
+import { Home, Dashboard, Guide } from "./pages";
 import { MemoryRouter as Router, Route } from "react-router-dom";
 import { NailProvider } from "./context/NailProvider";
 import { UploadedProvider } from "./context/UploadedProvider";
@@ -12,7 +12,8 @@ function App() {
         <UploadedProvider>
           <ErrorProvider>
             <Router>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" component={Guide} />
+              <Route exact path="/home" component={Home} />
               <Route exact path="/dashboard" component={Dashboard} />
             </Router>
           </ErrorProvider>

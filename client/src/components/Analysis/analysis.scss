@@ -11,6 +11,13 @@ $color: #dbdde6;
     justify-content: space-between;
   }
 
+  .loading-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+  }
+
   .tooltip {
     background: rgba(177, 161, 161, 0.5);
     padding: 8px 12px;
