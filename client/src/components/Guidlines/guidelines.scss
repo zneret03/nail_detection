@@ -32,8 +32,9 @@
     display: flex;
     justify-content: flex-end;
 
-    button {
+    .get-started-button {
       cursor: pointer;
+      text-decoration: none;
       margin-top: 30px;
       text-align: right;
       background-color: var(--dark-navy);
@@ -41,6 +42,7 @@
       padding: 10px 20px;
       border-radius: var(--border-radius);
       box-shadow: var(--box-shadow);
+      font-size: 13px;
 
       &:hover {
         background-color: var(--light-navy);

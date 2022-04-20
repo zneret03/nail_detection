@@ -14,8 +14,6 @@ export default function Activity() {
   const { nailSegmentation } = useContext(NailContext);
   const { handler } = useContext(ErrorContext);
 
-  console.log(handler);
-
   const isHandler = handler.type === "successHandler";
 
   return (

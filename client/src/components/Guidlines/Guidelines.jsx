@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./guidelines.scss";
 
 export default function Guidelines({ setStarter }) {
@@ -53,9 +54,9 @@ export default function Guidelines({ setStarter }) {
           })}
         </div>
         <div className="btn-next">
-          <button type="button" onClick={() => setStarter(true)}>
+          <Link to="/home" type="button" className="get-started-button">
             Get started
-          </button>
+          </Link>
         </div>
       </section>
     </>

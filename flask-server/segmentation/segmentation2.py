@@ -62,7 +62,7 @@ class ImageSegmentation:
         for i in range(len(contours)):
             index = perimeter[i][1]
             max_index.append(index)
-            # cv.drawContours(contoured_img, contours, index, (0, 0, 255), 2)
+            #cv2.drawContours(contoured_img, contours, index, (0, 0, 255), 2)
 
         # Get convexhull for max contours and draw them
         conContour = np.vstack(contours[i] for i in max_index)
@@ -126,13 +126,8 @@ class ImageSegmentation:
             cx = int(M['m10'] / M['m00'])
             cy = int(M['m01'] / M['m00'])
 
-            # Draw a circle to indicate the contour
-            cv2.circle(contoured_img, (cx, cy), 5, (255, 0, 0), -1)
-
             # solving Area
             areaCon = M["m00"]
-
-            #print("Area", areaCon)
 
             # Solving the radius using area
             pi = 3.14159
